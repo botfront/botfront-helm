@@ -1,0 +1,9 @@
+dependencies:
+  - name: mongodb
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    version: 7.8.6
+    condition: mongodb.enabled
+  - name: mongo-express
+    repository: https://cowboysysop.github.io/charts/
+    version: 1.0.1
+    condition: mongo-express.enabled

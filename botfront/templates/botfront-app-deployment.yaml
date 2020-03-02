@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: botfront-app
+  name: {{ .Release.Name }}-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: botfront-app
+  template:
+    metadata:
+      labels:
+        app: botfront-app
+    spec:
+      containers:
+      - env:
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_URL
+              name: {{ .Release.Name }}-secrets
+        - name: MAIL_URL
+          valueFrom:
+            secretKeyRef:
+              key: MAIL_URL
+              name: {{ .Release.Name }}-secrets
+        - name: OPLOG_URL
+          valueFrom:
+            secretKeyRef:
+              key: OPLOG_URL
+              name: {{ .Release.Name }}-secrets
+        - name: PORT
+          value: "3000"
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-app-config
+            optional: false
+        image: {{ .Values.botfront.app.image.name }}:{{ .Values.botfront.version }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-app
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /app/models
+          mountPropagation: None
+          name: {{ .Release.Name }}-disk
+      restartPolicy: Always
+      volumes:
+      - emptyDir: {}
+        name: {{ .Release.Name }}-disk

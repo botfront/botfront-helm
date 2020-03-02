@@ -1,0 +1,10 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ .Release.Name }}-app-config
+data:
+  ORCHESTRATOR: {{ .Values.botfront.orchestrator }}
+  GCP_PROJECT_ID: {{ .Values.botfront.initialProjectId }}
+  ROOT_URL: {{ .Values.botfront.app.protocol }}://{{ .Values.botfront.app.host }}
+  APPLICATION_APP_LOG_TRANSPORT: {{ .Values.botfront.logs.transport }}
+  APPLICATION_APP_LOG_LEVEL: {{ .Values.botfront.logs.level }}

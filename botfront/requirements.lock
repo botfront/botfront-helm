@@ -1,0 +1,9 @@
+dependencies:
+- name: mongodb
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 7.8.6
+- name: mongo-express
+  repository: https://cowboysysop.github.io/charts/
+  version: 1.0.1
+digest: sha256:b275fcb1faafdb2ea83899c7f8f1051f570c4ad7faebf88eb0901a1f3a6d531e
+generated: 2020-02-29T13:48:37.197976595-05:00

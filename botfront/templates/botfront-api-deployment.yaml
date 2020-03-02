@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: botfront-api
+  name: {{ .Release.Name }}-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: botfront-api
+  template:
+    metadata:
+      labels:
+        app: botfront-api
+    spec:
+      containers:
+      - env:
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_URL
+              name: {{ .Release.Name }}-secrets
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-api-config
+            optional: false
+        image: {{ .Values.botfront.api.image.name }}:{{ .Values.botfront.version }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-api
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      restartPolicy: Always
+

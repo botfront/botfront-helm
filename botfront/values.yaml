@@ -1,0 +1,117 @@
+# Default values for botfront.
+botfront:
+  # Set this to 'gke' when using the Enterprise Editon
+  orchestrator: docker-compose
+  # Only necessary with the open source editon
+  initialProjectId: bf
+  # SMTP URI used by Botfront to send accounts related transactional emails
+  smtpUri: test
+  logs:
+    # One of debug, info, warn, error
+    level: info
+    # Comma seprated list of transports. Currently supported: console, stackdriver
+    transport: console
+  # Botfront version (e.g: latest)
+  version: latest
+  app:
+    # The complete host of the Botfront application
+    host: app.dev
+    # The protocol: http or https
+    protocol: http
+    image:
+      # Botfront image name (e.g: botfront/botfront)
+      name: botfront/botfront
+  api:
+    image:
+      # Botfront API image name (e.g: botfront/botfront)
+      name: botfront/botfront-api
+  ingress:
+    enabled: true
+    nginx:
+      # Set to true if your cluster uses the nginx-ingress controller
+      enabled: true
+      # Those are default values for nginx ingress annotations. Note that another is already present:
+      # - kubernetes.io/ingress.class: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+    # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
+    annotations: {}
+    # Secret name containing the certificate
+    tlsSecretName:
+    # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
+    tlsHost:
+
+duckling:
+  enabled: true
+
+mongodb:
+  # Wether a MongoDB instance should be deployed as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas
+  enabled: false
+  service:
+    name: botfront-mongodb-service
+    type: NodePort
+  # MongoDB host
+  mongodbHost: botfront-mongodb-service.botfront
+  # MongoDB port (make sure it's a string and not an integer)
+  mongodbPort: '27017'
+  # Name of the database containing Botfront data
+  mongodbDatabase:
+  # Query string of the MongoDB authentication database
+  mongodbQueryString: '&retryWrites=true'
+  # MongoDB root username
+  mongodbRootUsername: root
+  # Username of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
+  mongodbUsername:
+  # Password of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
+  mongodbPassword:
+  # MongoDB root password
+  mongodbRootPassword:
+  # MongoDB oplog user username
+  mongodbOplogUsername:
+  # MongoDB oplog user password
+  mongodbOplogPassword:
+
+
+mongo-express:
+  # Set enabled: true to deploy the mongo-express client
+  enabled: false
+  # Basic authentication username to access the interface
+  basicAuthUsername:
+  # Basic authentication password to access the interface
+  basicAuthPassword:
+  # MongoDB root username
+  mongodbAdminUsername: root
+  # MongoDB root password
+  mongodbAdminPassword:
+  mongodbEnableAdmin: true
+  # Change this if using custom release name or namesmace {{ .Release.name }}-mongodb-service.{{ .Release.namespace }}
+  mongodbServer: botfront-mongodb-service.botfront
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
+    hosts:
+      - host:
+        paths:
+          - /
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
