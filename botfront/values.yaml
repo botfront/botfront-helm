@@ -15,7 +15,7 @@ botfront:
   version: latest
   app:
     # The complete host of the Botfront application
-    host: app.dev
+    host:
     # The protocol: http or https
     protocol: http
     image:
@@ -63,7 +63,7 @@ mongodb:
   # MongoDB root username
   mongodbRootUsername: root
   # Username of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
-  mongodbUsername:
+  mongodbUsername: 'bfrw'
   # Password of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
   mongodbPassword:
   # MongoDB root password
@@ -76,7 +76,7 @@ mongodb:
 
 mongo-express:
   # Set enabled: true to deploy the mongo-express client
-  enabled: false
+  enabled: true
   # Basic authentication username to access the interface
   basicAuthUsername:
   # Basic authentication password to access the interface
@@ -93,9 +93,10 @@ mongo-express:
   ingress:
     enabled: true
     hosts:
-      - host:
+      - host: db.dev
         paths:
           - /
+    tls: []
 
 
 resources: {}

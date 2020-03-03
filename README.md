@@ -1,4 +1,8 @@
 
+## WORK IN PROGRESS
+This repo is work in progress. Do not use it for production purposes yet.
+
+
 helm install -n botfront --namespace botfront ...
 
 ## General Botfront parameters
@@ -39,7 +43,9 @@ Those values must be set whether or not you enabled a MongoDB deployment.
 | `mongodb.mongodbOplogPassword` | Optional. Considerable database performance gains                             | `nil`                               |
 | `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
 
+
 > **Important**
+>
 > If the release name OR the namespace are not `botfront` you must set `mongodb.mongodbHost` to `<release-name>-mongodb-service.<namespace>`
 
 ### Enabling a Mongo Express deployment
@@ -58,6 +64,8 @@ Mongo Express is a web-based client for MongoDB.
 | `mongo-express.tls[0].hosts[0]`      | Optional. The host associated to your certificate             | `nil`                               |
 | `mongo-express.tls[0].secretName`    | Optional. Secret containing your certificate                  | `nil`                               |
 
+
 > **Important**
+> 
 > If the release name OR the namespace are not `botfront` you must set `mongo-express.mongodbServer` to `<release-name>-mongodb-service.<namespace>`
 
