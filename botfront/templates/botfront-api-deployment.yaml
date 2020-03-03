@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: botfront-api
+    app: {{ .Values.botfront.api.appName }}
   name: {{ .Release.Name }}-api-deployment
 spec:
   selector:
     matchLabels:
-      app: botfront-api
+      app: {{ .Values.botfront.api.appName }}
   template:
     metadata:
       labels:
-        app: botfront-api
+        app: {{ .Values.botfront.api.appName }}
     spec:
       containers:
       - env:
@@ -31,8 +31,12 @@ spec:
         - containerPort: 8080
           protocol: TCP
         resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
+          {{- with .Values.botfront.api.resources }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
       restartPolicy: Always
+      {{if .Values.botfront.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.botfront.imagePullSecret }}
+      {{end }}
 

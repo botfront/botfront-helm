@@ -1,5 +1,6 @@
 # Default values for botfront.
 botfront:
+  imagePullSecret: xxx
   # Set this to 'gke' when using the Enterprise Editon
   orchestrator: docker-compose
   # Only necessary with the open source editon
@@ -14,6 +15,8 @@ botfront:
   # Botfront version (e.g: latest)
   version: latest
   app:
+    # name used for labels and selectors
+    appName: botfront
     # The complete host of the Botfront application
     host:
     # The protocol: http or https
@@ -21,10 +24,21 @@ botfront:
     image:
       # Botfront image name (e.g: botfront/botfront)
       name: botfront/botfront
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
   api:
+    # name used for labels and selectors
+    appName: botfront-api
     image:
       # Botfront API image name (e.g: botfront/botfront)
       name: botfront/botfront-api
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
   ingress:
     enabled: true
     nginx:
@@ -42,9 +56,6 @@ botfront:
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
     tlsHost:
-
-duckling:
-  enabled: true
 
 mongodb:
   # Wether a MongoDB instance should be deployed as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas

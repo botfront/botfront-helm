@@ -1,0 +1,57 @@
+# Default values for botfront-project.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+#
+appName: rasa-project
+# Botfront project id
+projectId: bf
+# Botfront GraphQL URL
+graphQLEndpoint:
+# Launch Rasa with --debug flag
+debug: true
+
+rasa:
+  image: botfront/rasa-for-botfront:latest
+  initialProbeDelay: 30
+
+service:
+  enabled: true
+  type: NodePort
+  port: 80
+
+persistenceClaim:
+  enabled: true
+  storage: 2Gi
+
+ingress:
+  enabled: true
+  nginx:
+    # Set to true if your cluster uses the nginx-ingress controller
+    enabled: true
+    # Those are default values for nginx ingress annotations. Note that two other are present:
+    # - kubernetes.io/ingress.class: nginx
+    # - nginx.org/websocket-services: <rasa-service-name>
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 32m
+      # Timeouts should be long enough to support long trainings
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      # Set to "true" if you want to auto redirect to https
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+  # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
+  annotations: {}
+
+  host:
+  tlsSecretName:
+
+resources:
+  limits:
+    cpu: "2"
+    memory: 2Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+

@@ -1,56 +1,64 @@
 
+# Helm charts for Botfront
+
 ## WORK IN PROGRESS
 This repo is work in progress. Do not use it for production purposes yet.
 
 
-helm install -n botfront --namespace botfront ...
+## Add the repository
 
-## General Botfront parameters
+```bash
+helm add repo https://botfront.github.io/botfront-helm
+```
+
+## Install Botfront
+
+```bash
+helm install -n botfront --namespace botfront ...
+```
 
 | Parameter                        | Description                                                                                   | Default                 |
 |----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
-| `botfront.version`               | Botfront API Docker image                                                                     | `latest`                |
-| `botfront.app.image.name`        | Botfront Docker image                                                                         | `botfront/botfront`     |
-| `botfront.app.host`              | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
-| `botfront.api.image.name`        | Botfront API Docker image                                                                     | `botfront/botfront-api` |
+| **`botfront.version`**           | Botfront API Docker image                                                                     | `latest`                |
+| **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
+| **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
+| **`botfront.api.image.name`**    | Botfront API Docker image                                                                     | `botfront/botfront-api` |
 | `botfront.ingress.enabled`       | Enable Ingress                                                                                | `true`                  |
 | `botfront.ingress.nginx.enabled` | Enable if the `nginx-ingress` controller is installed (and used) on the cluster               | `true`                  |
 | `botfront.ingress.tlsSecretName` | Optional. Name of the secret containing the TLS certificate. If not set, SSL will be disabled | `nil`                   |
 | `botfront.ingress.tlsHost`       | Optional. Host associated with the TLS certificate (may contain a wildcard)                   | `nil`                   |
-
-## MongoDB configuration
+| `botfront.imagePullSecret`       | Name of the secret containing the credentials to pull images from a private Docker repo       | `nil`                   |
 
 ### Enabling a MongoDB deployment
 
-Botfront stores its data in a MongoDB database. A MongoDB deployment (`stable/mongodb` chart) is included in this chart and can be optionally installed.
-If you're using Botfront in a production environment, consider adding your own deployment, or using a managed service. And configure automated backups :)
-
-| Parameter         | Description                                  | Default |
-|-------------------|----------------------------------------------|---------|
-| `mongodb.enabled` | Set to `true` to enable a MongoDB deployment | `false` |
 
 
 ### Configure MongoDB
 
-Those values must be set whether or not you enabled a MongoDB deployment.
+Botfront stores its data in a MongoDB database. A MongoDB deployment (`stable/mongodb` chart) is included in this chart and can be optionally installed.
+If you're using Botfront in a production environment, consider adding your own deployment, or using a managed service. And configure automated backups :)
+
 
 | Parameter                      | Description                                                                   | Default                             |
 |--------------------------------|-------------------------------------------------------------------------------|-------------------------------------|
-| `mongodb.mongodbUsername`      | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                              |
-| `mongodb.mongodbPassword`      | The password of the user accessing the Botfront database (must not be `root`) | `nil`                               |
-| `mongodb.mongodbRootPassword`  | MongoDB `root` password                                                       | `nil`                               |
+| **`mongodb.mongodbUsername`**  | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                              |
+| **`mongodb.mongodbPassword`**  | The password of the user accessing the Botfront database (must not be `root`) | `nil`                               |
+| `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
+| `mongodb.mongodbPort`          | MongoDB server                                                                | `27017`                             |
+| `mongodb.mongodbQueryString`   | MongoDB connection query string                                               | `&retryWrites=true`                 |
+| `mongodb.mongodbRootPassword`  | MongoDB `root` password (only required if `mongodb.enabled` is set            | `nil`                               |
 | `mongodb.mongodbOplogUsername` | Optional. Considerable database performance gains                             | `nil`                               |
 | `mongodb.mongodbOplogPassword` | Optional. Considerable database performance gains                             | `nil`                               |
-| `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
+| `mongodb.enabled`              | Set to `true` to add MongoDB to this deployment                               | `false`                             |
 
 
 > **Important**
 >
-> If the release name OR the namespace are not `botfront` you must set `mongodb.mongodbHost` to `<release-name>-mongodb-service.<namespace>`
+> If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
 
-### Enabling a Mongo Express deployment
+### Configure Mongo Express
 
-Mongo Express is a web-based client for MongoDB.
+Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Express to your deployment
 
 | Parameter                            | Description                                                   | Default                             |
 |--------------------------------------|---------------------------------------------------------------|-------------------------------------|
@@ -66,6 +74,38 @@ Mongo Express is a web-based client for MongoDB.
 
 
 > **Important**
-> 
-> If the release name OR the namespace are not `botfront` you must set `mongo-express.mongodbServer` to `<release-name>-mongodb-service.<namespace>`
+>
+> If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
+
+## Install Rasa
+
+```bash
+helm install -n botfront --namespace botfront ...
+```
+| Parameter   | Description | Default |
+|-------------|-------------|---------|
+| `projectId` | ProjectId   | `bf`    |
+| `graphQLEndpoint`              | Should have the form `http://<botfront-service>.<namespace>/graphql            | `nil`                             |
+| `rasa.image`              | Rasa image            | `botfront/rasa-for-botfront:latest`                             |
+
+
+## Setup credentials for private Docker repo
+
+Once you obtain your `key.json` file (from GCR for example):
+
+1. Create a `docker-registry` secret in your cluster
+```bash
+kubectl create secret docker-registry gcr-json-key \
+  --docker-server=gcr.io \
+  --docker-username=_json_key \
+  --docker-password="$(cat key.json)" \
+  --docker-email=your@email.com
+```
+
+2. Patch the `default` service account (or the service account pulling images in your pods)
+```
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
+```
+
+3. Set `botfront.imagePullSecret` to `gcr-json-key`
 

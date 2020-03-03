@@ -1,0 +1,37 @@
+
+{{ if .Values.ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  {{- if ne .Release.Namespace "default" }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  name: {{ .Release.Name }}-rasa-ingress
+  annotations:
+    {{- if .Values.ingress.nginx.enabled}}
+    kubernetes.io/ingress.class: nginx
+    nginx.org/websocket-services: {{ .Release.Name }}-rasa-service
+    {{- with .Values.ingress.nginx.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- else -}}
+    {{ with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end -}}
+    {{- end}}
+spec:
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Release.Name }}-rasa-service
+          servicePort: 80
+        path: /
+  {{ if .Values.ingress.tlsSecretName -}}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.host }}
+    secretName: {{ .Values.ingress.tlsSecretName }}
+  {{- end -}}
+{{- end -}}

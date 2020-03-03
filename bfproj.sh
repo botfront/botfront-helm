@@ -1,0 +1,1 @@
+helm install bf-nathan --namespace bf-nathan . 

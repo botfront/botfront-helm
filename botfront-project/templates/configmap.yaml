@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  BF_PROJECT_ID: {{ .Values.projectId }}
+  BF_URL: {{ .Values.graphQLEndpoint }}
+kind: ConfigMap
+metadata:
+  {{- if ne .Release.Namespace "default" }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  name: {{ .Release.Name }}-rasa-config

@@ -1,0 +1,16 @@
+{{- if .Values.persistenceClaim.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  {{- if ne .Release.Namespace "default" }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  name: {{ .Release.Name }}-rasa-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  resources:
+    requests:
+      storage: {{ .Values.persistenceClaim.storage }}
+{{- end -}}

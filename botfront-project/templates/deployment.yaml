@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  {{- if ne .Release.Namespace "default" }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    app: {{ .Values.appName }}
+  name: {{ .Release.Name }}-rasa-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - command:
+        - rasa
+        - run
+        - --enable-api
+        {{ if .Values.debug -}}
+        - --debug
+        {{ end -}}
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-rasa-config
+            optional: false
+        image: {{ .Values.rasa.image }}
+        imagePullPolicy: IfNotPresent
+        name: rasa
+        ports:
+        - containerPort: 5005
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: {{ .Values.rasa.initialProbeDelay }}
+          failureThreshold: 10
+        resources:
+          {{- with .Values.resources }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- if .Values.persistenceClaim.enabled }}
+        volumeMounts:
+        - mountPath: "/app/models"
+          name: {{ .Release.Name }}-rasa-volume
+      volumes:
+      - name: {{ .Release.Name }}-rasa-volume
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-rasa-volume-claim
+      {{- end -}}
+    {{if .Values.rasa.imagePullSecret }}
+    imagePullSecrets:
+      - name: {{ .Values.rasa.imagePullSecret }}
+    {{end }}
