@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  botfront:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-03-03T10:15:13.907523763-05:00
+    description: A Helm chart for Botfront
+    digest: b02e860be5a8e44303ac07ba46abd6f31ce70a9f1030764692e1ba2ed9f8c529
+    name: botfront
+    urls:
+    - https://botfront.github.io/botfront-helm/botfront-0.1.0.tgz
+    version: 0.1.0
+generated: 2020-03-03T10:15:13.901829341-05:00
