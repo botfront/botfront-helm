@@ -1,6 +1,6 @@
 # Default values for botfront.
 botfront:
-  imagePullSecret: xxx
+  imagePullSecret:
   # Set this to 'gke' when using the Enterprise Editon
   orchestrator: docker-compose
   # Only necessary with the open source editon
@@ -68,7 +68,7 @@ mongodb:
   # MongoDB port (make sure it's a string and not an integer)
   mongodbPort: '27017'
   # Name of the database containing Botfront data
-  mongodbDatabase:
+  mongodbDatabase: bf
   # Query string of the MongoDB authentication database
   mongodbQueryString: '&retryWrites=true'
   # MongoDB root username
@@ -87,7 +87,7 @@ mongodb:
 
 mongo-express:
   # Set enabled: true to deploy the mongo-express client
-  enabled: true
+  enabled: false
   # Basic authentication username to access the interface
   basicAuthUsername:
   # Basic authentication password to access the interface
@@ -104,26 +104,7 @@ mongo-express:
   ingress:
     enabled: true
     hosts:
-      - host: db.dev
+      - host:
         paths:
           - /
     tls: []
-
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}

@@ -4,6 +4,7 @@
 THIS REPO IS WORK IN PROGRESS
 
 ## Prerequisites
+
 Kubernetes 1.12+
 Helm 2.11+
 PV provisioner support in the underlying infrastructure
@@ -11,14 +12,53 @@ PV provisioner support in the underlying infrastructure
 ## Add the repository
 
 ```bash
-helm repo add botfront-repo https://botfront.github.io/botfront-helm
+helm repo add botfront https://botfront.github.io/botfront-helm
 ```
 
 ## Install Botfront
 
-```bash
-helm install -n botfront --namespace botfront botfront ...
+Given that there's quite a few parameters to set, we recommend using a config file. This is a minimal `config.yaml` you could use:
+
+```yaml
+botfront:
+  version: v0.20.0 # or later
+  app:
+    # The complete external host of the Botfront application (eg. botfront.yoursite.com)
+    host: botfront.yoursite.om
+  ingress:
+    # If you want to configure an ingress
+    enabled: true
+    nginx:
+      # Set to true if your cluster uses the nginx-ingress controller
+      enabled: true
+
+mongodb:
+  # Username of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
+  mongodbUsername: username
+  # Password of the MongoDB user that will have read-write access to the Botfront database. This is not the root user
+  mongodbPassword: password
+  # Deploy a MongoDB instance as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas.
+  enabled: true
+  service:
+    ## - if deploying under a different release name or a different namespace,
+    name: botfront-mongodb-service
+    type: NodePort
+  # MongoDB host - if deploying under a different release name or a different namespace, change this: <helm-release-name>-mongodb-service.<namespace>
+  mongodbHost: botfront-mongodb-service.botfront
+  # MongoDB port (make sure it's a string and not an integer)
+  mongodbPort: '27017'
+  # MongoDB root username
+  mongodbRootUsername: root
+  # MongoDB root password
+  mongodbRootPassword:
+
 ```
+
+
+```bash
+helm install -f config.yaml -n botfront --namespace botfront botfront/botfront
+```
+
 You probably need to specify at least the value in **bold**
 
 
@@ -82,11 +122,11 @@ If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must fol
 ```bash
 helm install -n botfront --namespace botfront ...
 ```
-| Parameter   | Description | Default |
-|-------------|-------------|---------|
-| `projectId` | ProjectId   | `bf`    |
-| `graphQLEndpoint`              | Should have the form `http://<botfront-service>.<namespace>/graphql            | `nil`                             |
-| `rasa.image`              | Rasa image            | `botfront/rasa-for-botfront:latest`                             |
+| Parameter         | Description                                                          | Default                             |
+|-------------------|----------------------------------------------------------------------|-------------------------------------|
+| `projectId`       | ProjectId                                                            | `bf`                                |
+| `graphQLEndpoint` | Should have the form `http://<botfront-service>.<namespace>/graphql` | `nil`                               |
+| `rasa.image`      | Rasa image                                                           | `botfront/rasa-for-botfront:latest` |
 
 
 ## Setup credentials for private Docker repo
@@ -96,15 +136,15 @@ Once you obtain your `key.json` file (from GCR for example):
 1. Create a `docker-registry` secret in your cluster
 ```bash
 kubectl create secret docker-registry gcr-json-key \
-  --docker-server=gcr.io \
+  --docker-server=https://gcr.io \
   --docker-username=_json_key \
   --docker-password="$(cat key.json)" \
-  --docker-email=your@email.com
+  --namespace botfront
 ```
 
-2. Patch the `default` service account (or the service account pulling images in your pods)
+2. Patch the `default` service account (or the service account pulling images in your pods) in the namespace Botfront is deployed.
 ```
-kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}' --namespace botfront
 ```
 
 3. Set `botfront.imagePullSecret` to `gcr-json-key`
