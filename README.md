@@ -11,14 +11,16 @@ PV provisioner support in the underlying infrastructure
 ## Add the repository
 
 ```bash
-helm add repo https://botfront.github.io/botfront-helm
+helm repo add botfront-repo https://botfront.github.io/botfront-helm
 ```
 
 ## Install Botfront
 
 ```bash
-helm install -n botfront --namespace botfront ...
+helm install -n botfront --namespace botfront botfront ...
 ```
+You probably need to specify at least the value in **bold**
+
 
 | Parameter                        | Description                                                                                   | Default                 |
 |----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
