@@ -1,9 +1,12 @@
 
 # Helm charts for Botfront
 
-## WORK IN PROGRESS
-This repo is work in progress. Do not use it for production purposes yet.
+THIS REPO IS WORK IN PROGRESS
 
+## Prerequisites
+Kubernetes 1.12+
+Helm 2.11+
+PV provisioner support in the underlying infrastructure
 
 ## Add the repository
 
@@ -29,9 +32,6 @@ helm install -n botfront --namespace botfront ...
 | `botfront.ingress.tlsHost`       | Optional. Host associated with the TLS certificate (may contain a wildcard)                   | `nil`                   |
 | `botfront.imagePullSecret`       | Name of the secret containing the credentials to pull images from a private Docker repo       | `nil`                   |
 
-### Enabling a MongoDB deployment
-
-
 
 ### Configure MongoDB
 
@@ -52,11 +52,10 @@ If you're using Botfront in a production environment, consider adding your own d
 | `mongodb.enabled`              | Set to `true` to add MongoDB to this deployment                               | `false`                             |
 
 
-> **Important**
->
-> If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
+**Important**
+If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
 
-### Configure Mongo Express
+### Optional: enable and configure Mongo Express
 
 Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Express to your deployment
 
@@ -73,9 +72,8 @@ Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Ex
 | `mongo-express.tls[0].secretName`    | Optional. Secret containing your certificate                  | `nil`                               |
 
 
-> **Important**
->
-> If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
+**Important**
+If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
 
 ## Install Rasa
 
