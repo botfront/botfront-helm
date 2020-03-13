@@ -9,7 +9,6 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  volumeMode: Block
   resources:
     requests:
       storage: {{ .Values.persistenceClaim.storage }}

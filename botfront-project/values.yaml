@@ -22,7 +22,7 @@ service:
 
 persistenceClaim:
   enabled: true
-  storage: 2Gi
+  storage: 1Gi
 
 ingress:
   enabled: true
