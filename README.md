@@ -7,7 +7,7 @@ THIS REPO IS WORK IN PROGRESS
 
 Kubernetes 1.12+
 Helm 2.11+
-PV provisioner support in the underlying infrastructure
+Persistent volume provisioner support in the underlying infrastructure
 
 ## Add the repository
 
@@ -23,7 +23,7 @@ Given that there's quite a few parameters to set, we recommend using a config fi
 botfront:
   version: v0.20.0 # or later
   app:
-    # The complete external host of the Botfront application (eg. botfront.yoursite.com)
+    # The complete external host of the Botfront application (eg. botfront.yoursite.com). It must be set even if running on a private or local DNS (it populates the ROOT_URL).
     host: botfront.yoursite.om
   ingress:
     # If you want to configure an ingress
@@ -120,18 +120,18 @@ If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must fol
 ## Install Rasa
 
 ```bash
-helm install -n botfront --namespace botfront ...
+helm install -f config.yaml -n my_project --namespace botfront botfront/botfront-project
 ```
-| Parameter         | Description                                                          | Default                             |
-|-------------------|----------------------------------------------------------------------|-------------------------------------|
-| `projectId`       | ProjectId                                                            | `bf`                                |
-| `graphQLEndpoint` | Should have the form `http://<botfront-service>.<namespace>/graphql` | `nil`                               |
-| `rasa.image`      | Rasa image                                                           | `botfront/rasa-for-botfront:latest` |
+| Parameter         | Description                                                                   | Default                                 |
+|-------------------|-------------------------------------------------------------------------------|-----------------------------------------|
+| `projectId`       | ProjectId                                                                     | `bf`                                    |
+| `graphQLEndpoint` | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql` | `nil`                                   |
+| `rasa.image`      | Rasa image                                                                    | `botfront/rasa-for-botfront:1.7.1-bf.4` |
 
 
-## Setup credentials for private Docker repo
+## Authenticating to Botfront private repo (Enterprise Edition Customers)
 
-Once you obtain your `key.json` file (from GCR for example):
+Once you obtain your `key.json` file:
 
 1. Create a `docker-registry` secret in your cluster
 ```bash
@@ -142,7 +142,7 @@ kubectl create secret docker-registry gcr-json-key \
   --namespace botfront
 ```
 
-2. Patch the `default` service account (or the service account pulling images in your pods) in the namespace Botfront is deployed.
+2. Patch the `default` service account (or the service account pulling images in your pods) **in the namespace Botfront is deployed**.
 ```
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}' --namespace botfront
 ```
