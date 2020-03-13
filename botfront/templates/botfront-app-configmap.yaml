@@ -7,4 +7,7 @@ data:
   GCP_PROJECT_ID: {{ .Values.botfront.initialProjectId }}
   ROOT_URL: {{ .Values.botfront.app.protocol }}://{{ .Values.botfront.app.host }}
   APPLICATION_APP_LOG_TRANSPORT: {{ .Values.botfront.logs.transport }}
+  APPLICATION_LOGGER_NAME: {{ .Values.botfront.logs.loggerName }}
   APPLICATION_APP_LOG_LEVEL: {{ .Values.botfront.logs.level }}
+  AUDIT_LOG_TRANSPORT: {{ .Values.botfront.audit.transport }}
+  AUDIT_LOGGER_NAME:  {{ .Values.botfront.audit.loggerName }}

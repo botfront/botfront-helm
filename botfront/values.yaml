@@ -12,6 +12,12 @@ botfront:
     level: info
     # Comma seprated list of transports. Currently supported: console, stackdriver
     transport: console
+    # Stack driver application logger name
+    loggerName: botfront-app-log
+  audit:
+    transport: console
+    # Stack driver audit logger name
+    loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
   version: latest
   app:
@@ -28,6 +34,9 @@ botfront:
       requests:
         cpu: 100m
         memory: 512Mi
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 3
   api:
     # name used for labels and selectors
     appName: botfront-api
@@ -51,7 +60,7 @@ botfront:
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
     # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
-    annotations: {}
+    annotations: []
     # Secret name containing the certificate
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)

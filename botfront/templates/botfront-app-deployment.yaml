@@ -50,6 +50,12 @@ spec:
         - mountPath: /app/models
           mountPropagation: None
           name: {{ .Release.Name }}-disk
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: {{ .Values.botfront.app.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.botfront.app.livenessProbe.periodSeconds }}
       restartPolicy: Always
       {{if .Values.botfront.imagePullSecret }}
       imagePullSecrets:
