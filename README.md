@@ -1,13 +1,18 @@
 
-# Helm charts for Botfront
+# Botfront Helm Charts
 
-THIS REPO IS WORK IN PROGRESS
+This repo contains 2 charts:
+
+- `botfront`: the Botfront platform
+- `botfront-project`: The Rasa project connected to Botfront,
+
+At this time you need to install both separately.
 
 ## Prerequisites
 
-Kubernetes 1.12+
-Helm 2.11+
-Persistent volume provisioner support in the underlying infrastructure
+- Kubernetes 1.12+
+- Helm 2.11+
+- Persistent volume provisioner support in the underlying infrastructure
 
 ## Add the repository
 
@@ -119,8 +124,12 @@ If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must fol
 
 ## Install Rasa
 
+
 ```bash
-helm install -f config.yaml -n my_project --namespace botfront botfront/botfront-project
+helm install -n my_project --namespace botfront botfront/ --set graphQLEndpoint=http://<botfront-service>.<botfront-namespace>/graphql
+
+
+
 ```
 | Parameter         | Description                                                                   | Default                                 |
 |-------------------|-------------------------------------------------------------------------------|-----------------------------------------|
