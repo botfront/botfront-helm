@@ -25,6 +25,14 @@ helm repo add botfront https://botfront.github.io/botfront-helm
 Given that there's quite a few parameters to set, we recommend using a config file. This is a minimal `config.yaml` you could use:
 
 ```yaml
+# OpenShift only
+# --------------
+# Uncomment and configure the following if you encounter "Error creating: pods "..." is forbidden: unable to validate against any security context constraint"
+# securityContext:
+#     runAsNonRoot: true
+#     runAsUser: ""
+#     fsGroup: ""
+
 botfront:
   version: v0.20.0 # or later
   app:
