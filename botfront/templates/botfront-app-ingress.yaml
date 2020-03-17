@@ -19,10 +19,10 @@ spec:
   - host: {{ .Values.botfront.app.host }}
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: {{ .Release.Name }}-app-service
           servicePort: 80
-        path: /
   {{ if .Values.botfront.ingress.tlsSecretName -}}
   tls:
   - hosts:

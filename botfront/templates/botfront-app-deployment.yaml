@@ -30,6 +30,11 @@ spec:
             secretKeyRef:
               key: OPLOG_URL
               name: {{ .Release.Name }}-secrets
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: API_KEY
+              name: {{ .Release.Name }}-secrets
         - name: PORT
           value: "3000"
         envFrom:

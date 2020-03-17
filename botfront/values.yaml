@@ -8,6 +8,9 @@
 
 # Default values for botfront.
 botfront:
+  # An optional but recommended token to protect the GraphQL API.
+  graphQLApiToken:
+  # An optional secret name to use to pull images from a private Docker registry
   imagePullSecret:
   # Set this to 'gke' when using the Enterprise Editon
   orchestrator: docker-compose
@@ -58,6 +61,7 @@ botfront:
 
   ingress:
     enabled: true
+    enableGraphQL: false
     nginx:
       # Set to true if your cluster uses the nginx-ingress controller
       enabled: true
