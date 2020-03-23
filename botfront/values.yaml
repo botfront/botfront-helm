@@ -30,12 +30,12 @@ botfront:
     # Stack driver audit logger name
     loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
-  version: latest
+  version: v0.21.3
   app:
     # name used for labels and selectors
     appName: botfront
     # The complete host of the Botfront application
-    host:
+    host: app.botfront.local
     # The protocol: http or https
     protocol: http
     image:
