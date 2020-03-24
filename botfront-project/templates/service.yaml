@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-    app: {{ .Values.appName }}
+    app: {{ .Release.Name }}-{{ .Values.appName }}
   name: {{ .Release.Name }}-rasa-service
 spec:
   ports:
@@ -15,6 +15,6 @@ spec:
     protocol: TCP
     targetPort: 5005
   selector:
-    app: {{ .Values.appName }}
+    app: {{ .Release.Name }}-{{ .Values.appName }}
   type: {{ .Values.service.type }}
 {{ end }}
