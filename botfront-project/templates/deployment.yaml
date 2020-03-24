@@ -5,16 +5,16 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-    app: {{ .Values.appName }}
+    app: {{ .Release.Name }}-{{ .Values.appName }}
   name: {{ .Release.Name }}-rasa-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.appName }}
+      app: {{ .Release.Name }}-{{ .Values.appName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.appName }}
+        app: {{ .Release.Name }}-{{ .Values.appName }}
     spec:
       containers:
       - command:
