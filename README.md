@@ -139,11 +139,12 @@ helm install -n my_project --namespace botfront botfront/ --set graphQLEndpoint=
 
 
 ```
-| Parameter         | Description                                                                   | Default                                 |
-|-------------------|-------------------------------------------------------------------------------|-----------------------------------------|
-| `projectId`       | ProjectId                                                                     | `bf`                                    |
-| `graphQLEndpoint` | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql` | `nil`                                   |
-| `rasa.image`      | Rasa image                                                                    | `botfront/rasa-for-botfront:1.7.1-bf.4` |
+| Parameter           | Description                                                                   | Default                                 |
+|---------------------|-------------------------------------------------------------------------------|-----------------------------------------|
+| `projectId`         | ProjectId                                                                     | `bf`                                    |
+| `graphQLEndpoint`   | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql` | `nil`                                   |
+| `rasa.image`        | Rasa image                                                                    | `botfront/rasa-for-botfront:1.7.1-bf.4` |
+| `rasa.ingress.host` | Rasa instance host                                                            |                                         |
 
 
 ## Authenticating to Botfront private repo (Enterprise Edition Customers)
