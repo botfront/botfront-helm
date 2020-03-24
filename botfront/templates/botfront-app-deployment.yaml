@@ -30,10 +30,10 @@ spec:
             secretKeyRef:
               key: OPLOG_URL
               name: {{ .Release.Name }}-secrets
-        # - name: API_KEY
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: API_KEY
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: API_KEY
               name: {{ .Release.Name }}-secrets
         - name: PORT
           value: "3000"
@@ -59,6 +59,9 @@ spec:
           httpGet:
             path: /health
             port: 3000
+            httpHeaders:
+            - name: authorization
+              value: {{ .Values.botfront.graphQLApiToken }}
           initialDelaySeconds: {{ .Values.botfront.app.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.botfront.app.livenessProbe.periodSeconds }}
       restartPolicy: Always
