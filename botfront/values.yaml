@@ -27,7 +27,7 @@ botfront:
     # Stack driver audit logger name
     loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
-  version: latest
+  version: v0.20.3
   app:
     # name used for labels and selectors
     appName: botfront

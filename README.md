@@ -34,7 +34,7 @@ Given that there's quite a few parameters to set, we recommend using a config fi
 #     fsGroup: ""
 
 botfront:
-  version: v0.20.0 # or later
+  version: v0.20.3 # or later
   app:
     # The complete external host of the Botfront application (eg. botfront.yoursite.com). It must be set even if running on a private or local DNS (it populates the ROOT_URL).
     host: botfront.yoursite.om
