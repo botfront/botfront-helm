@@ -125,3 +125,17 @@ mongo-express:
         paths:
           - /
     tls: []
+
+redis: 
+  # Set enabled: true to deploy redis
+  enabled: false
+  # redis is used as a lock database for rasa, so async update between master and slaves can create issues
+  cluster:
+    enabled: false
+    slaveCount: 0
+  # if the password is not set it will be randomly generated, you can set usePassword to false to not use a password
+  # usePassword: false
+  global:
+    redis:
+      password: 
+  

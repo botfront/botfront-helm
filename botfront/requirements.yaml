@@ -7,3 +7,7 @@ dependencies:
     repository: https://cowboysysop.github.io/charts/
     version: 1.0.1
     condition: mongo-express.enabled
+  - name: redis 
+    repository: https://charts.bitnami.com/bitnami/
+    version: 10.5.14
+    condition: redis.enabled
