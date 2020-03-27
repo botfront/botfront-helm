@@ -110,6 +110,28 @@ If you're using Botfront in a production environment, consider adding your own d
 **Important**
 If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
 
+
+### Enable and configure redis
+
+Redis is a data structure store, used by rasa as a lockstore. It should be enabled when working with multiple rasa instances. As it ensure that
+incoming messages are processed in the right order.
+
+| Parameter                            | Description                                                   | Default                             |
+|--------------------------------------|---------------------------------------------------------------|-------------------------------------|
+| `redis.enabled`                      | Set to `true` to enable redis                                 | `false`                             |
+| `redis.cluster.enabled`              | Do not change this value                                      | `false`                             |
+| `redis.cluster.slaveCount`           | Do not change this value                                      | 0                                   |
+| `redis.usePassword`                  | Enable password authentication for connecting to redis        | `true`                              |
+| `redis.global.password`              | The password value, if not set will be randomly generated     | `nil`                               |
+
+
+**Important: about .cluster.enabled and .cluster.slaveCount** 
+
+"Redis Cluster is not able to guarantee strong consistency. In practical terms this means that under certain conditions it is possible that Redis Cluster will lose writes that were acknowledged by the system to the client."
+So you should not use a redis cluster because rasa uses it for storing locks, thus it need to be consistent.
+
+
+
 ### Optional: enable and configure Mongo Express
 
 Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Express to your deployment
