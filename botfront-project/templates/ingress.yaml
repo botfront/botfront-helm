@@ -9,6 +9,9 @@ metadata:
   name: {{ .Release.Name }}-rasa-ingress
   annotations:
     {{- if .Values.ingress.nginx.enabled}}
+    #uncomment the following line if you are working with multiple rasa using a websocket based channel
+    # web socket connection need to have a sticky session https://socket.io/docs/using-multiple-nodes/
+    #nginx.ingress.kubernetes.io/affinity: "cookie"
     kubernetes.io/ingress.class: nginx
     nginx.org/websocket-services: {{ .Release.Name }}-rasa-service
     {{- with .Values.ingress.nginx.annotations }}
