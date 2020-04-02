@@ -20,11 +20,13 @@ spec:
             secretKeyRef:
               key: MONGO_URL
               name: {{ .Release.Name }}-secrets
+        {{- if .Values.botfront.smtpUri }}
         - name: MAIL_URL
           valueFrom:
             secretKeyRef:
               key: MAIL_URL
               name: {{ .Release.Name }}-secrets
+        {{- end }}
         - name: OPLOG_URL
           valueFrom:
             secretKeyRef:

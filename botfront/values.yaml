@@ -14,7 +14,7 @@ botfront:
   # Only necessary with the open source editon
   initialProjectId: bf
   # SMTP URI used by Botfront to send accounts related transactional emails
-  smtpUri: test
+  # smtpUri: smtp://login:password@smtp.yourserver.com:587
   logs:
     # One of debug, info, warn, error
     level: info
