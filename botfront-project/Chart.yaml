@@ -2,4 +2,4 @@ apiVersion: v1
 appVersion: "0.20.3"
 description: A Helm chart for Botfront projects
 name: botfront-project
-version: 0.2.3
+version: 0.2.4
