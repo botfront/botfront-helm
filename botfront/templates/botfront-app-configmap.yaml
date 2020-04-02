@@ -3,6 +3,9 @@ kind: "ConfigMap"
 metadata:
   name: {{ .Release.Name }}-app-config
 data:
+  {{- if .Values.botfront.initialProjectId }}
+  BF_PROJECT_ID: {{ .Values.botfront.initialProjectId }}
+  {{- end }}
   ORCHESTRATOR: {{ .Values.botfront.orchestrator }}
   GCP_PROJECT_ID: {{ .Values.botfront.initialProjectId }}
   ROOT_URL: {{ .Values.botfront.app.protocol }}://{{ .Values.botfront.app.host }}
