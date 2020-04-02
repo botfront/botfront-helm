@@ -12,7 +12,7 @@ graphQLEndpoint:
 debug: true
 
 rasa:
-  image: botfront/rasa-for-botfront:latest
+  image: botfront/rasa-for-botfront:v1.7.1-bf.4
   initialProbeDelay: 30
 
 service:
