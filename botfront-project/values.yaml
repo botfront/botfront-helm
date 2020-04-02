@@ -29,6 +29,8 @@ ingress:
   nginx:
     # Set to true if your cluster uses the nginx-ingress controller
     enabled: true
+    enableSessionAffinity: true
+    enableSockets: true
     # Those are default values for nginx ingress annotations. Note that two other are present:
     # - kubernetes.io/ingress.class: nginx
     # - nginx.org/websocket-services: <rasa-service-name>
