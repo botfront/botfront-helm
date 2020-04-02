@@ -22,12 +22,14 @@ tracker_store:
 rasa_addons.core.channels.webchat.WebchatInput:
   session_persistence: true
   base_url: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
+  socket_path: '/socket.io/'
 
 3b. If using Rasa Webchat Pro, set the following credentials:
 
 rasa_addons.core.channels.webchat_plus.WebchatPlusInput:
   session_persistence: true
   base_url: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
+  socket_path: '/socket.io/'
 
 4. Set the Rasa instance internal URL in Settings > Instance:
 http://{{ .Release.Name }}-rasa-service.{{ .Release.Namespace }}

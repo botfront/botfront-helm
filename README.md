@@ -28,7 +28,6 @@ Given that there's quite a few parameters to set, we recommend using a config fi
 
 ```yaml
 botfront:
-  version: v0.20.3 # or later
   app:
     # The complete external host of the Botfront application (eg. botfront.yoursite.com). It must be set even if running on a private or local DNS (it populates the ROOT_URL).
     host: botfront.yoursite.com
@@ -126,14 +125,21 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 
 ## Botfront project (Rasa) parameters
 
+| Parameter           | Description                                                                                             | Default                                 |
+|---------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| `projectId`         | ProjectId                                                                                               | `bf`                                    |
+| `graphQLEndpoint`   | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                           | `nil`                                   |
+| `rasa.image`        | Rasa image                                                                                              | `botfront/rasa-for-botfront:1.7.1-bf.4` |
+| `rasa.ingress.host` | Rasa instance host                                                                                      | `nil`                                   |
+| `ducklingUrl`       | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment | `nil`                                   |
 
+## Duckling parameters
 
-| Parameter           | Description                                                                   | Default                                 |
-|---------------------|-------------------------------------------------------------------------------|-----------------------------------------|
-| `projectId`         | ProjectId                                                                     | `bf`                                    |
-| `graphQLEndpoint`   | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql` | `nil`                                   |
-| `rasa.image`        | Rasa image                                                                    | `botfront/rasa-for-botfront:1.7.1-bf.4` |
-| `rasa.ingress.host` | Rasa instance host                                                            |
+| Parameter              | Description                   | Default                    |
+|------------------------|-------------------------------|----------------------------|
+| **`duckling.enabled`** | Enable Duckling in this chart | `true`                     |
+| **`botfront.image`**   | Duckling image                | `botfront/duckling:latest` |
+
 ## MongoDB parameters
 
 Botfront stores its data in a MongoDB database. A MongoDB deployment (`stable/mongodb` chart) is included in this chart and can be optionally installed.
