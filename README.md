@@ -176,21 +176,17 @@ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-jso
 3. Set `botfront.imagePullSecret` to `gcr-json-key`
 
 
-## Working with multiple rasa instances
+## Working with multiple Rasa instances
 
-When scaling up your bot, you might need multiple rasa instances to handle the load of conversations.
-You will first need to set up a model server to serve your model to the multiple rasa instances.
-And also set up how you want to handle the way conversations are distributed on the instances.
+You might need multiple Rasa instances to handle a high number of concurrent conversations.
+You will first need to set up a model server so all instances can fetch the latest model.
 
-There are two ways do so, by using a lock store or using a sticky session:
-- A sticky session is when a user will use the same rasa instance for the whole conversation, 
-So the load balancer cannot change the rasa instance dynamically during the conversation.
-- On the other hand, a lock store centralizes which rasa instance is working on which conversation,
-allowing the load balancer to change the rasa instance during the conversation. **Important :** depending on the transport protocol,
-some conversation channels cannot support a change of rasa instance (a channel relying on socket.io for example ). 
-So using a lock store for this type of channel is not possible.
+You can use two mechanisms to ensure tracker consistency when scaling horizontally:lock stores and sticky sessions:
+- A sticky session ties a conversation to a single Rasa instance. So the load balancer cannot change the Rasa instance dynamically during the conversation.
+- A lock store centralizes the conversation state and makes sure no race condition occurs if the load balancer spreads the conversation across several instances. 
 
-**By default the rasa chart is setup to use a sticky session mechanism.**
+**Important :** Sockets do not support a change of rasa instance. Using the Socket.io channel (Rasa Webchat) requires session affinity. 
+Rasa chart enables sticky sessions by default
 
 ### Model server
 
