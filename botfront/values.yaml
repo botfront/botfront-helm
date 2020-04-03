@@ -14,7 +14,7 @@ botfront:
   # Only necessary with the open source editon
   initialProjectId: bf
   # SMTP URI used by Botfront to send accounts related transactional emails
-  smtpUri: test
+  # smtpUri: smtp://login:password@smtp.yourserver.com:587
   logs:
     # One of debug, info, warn, error
     level: info
@@ -27,7 +27,7 @@ botfront:
     # Stack driver audit logger name
     loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
-  version: v0.20.3
+  version: v0.21.4
   app:
     # name used for labels and selectors
     appName: botfront
@@ -73,6 +73,14 @@ botfront:
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
     tlsHost:
+
+duckling:
+  enabled: true
+  image: botfront/duckling:latest
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 mongodb:
   # Wether a MongoDB instance should be deployed as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas

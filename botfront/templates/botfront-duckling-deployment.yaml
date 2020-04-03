@@ -1,0 +1,33 @@
+{{ if .Values.duckling.enabled}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.botfront.app.appName }}
+  name: {{ .Release.Name }}-duckling-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.botfront.app.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.botfront.app.appName }}
+    spec:
+      containers:
+      - image: {{ .Values.duckling.image }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-duckling
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        resources:
+          {{- with .Values.duckling.resources }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+      restartPolicy: Always
+{{ end }}

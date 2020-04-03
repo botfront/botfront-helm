@@ -1,0 +1,4 @@
+The Helm chart was succesfully installed on your cluster.
+
+Botfront is available at the following URL:
+http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}

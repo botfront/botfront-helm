@@ -1,0 +1,16 @@
+{{ if .Values.duckling.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.botfront.app.appName }}
+  name: {{ .Release.Name }}-duckling-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: {{ .Values.botfront.app.appName }}
+  type: NodePort
+{{ end }}
