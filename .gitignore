@@ -1,1 +1,3 @@
 private
+loadtesting/k6-rest.js
+loadtesting/socket-load.yaml
