@@ -2,7 +2,7 @@ The Helm chart was succesfully installed on your cluster.
 Please execute the following instructions to complete your project's setup.
 
 1. Your Rasa instance is available at the following URL:
-http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
+http{{ if .Values.ingress.tlsSecretName }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
 
 2. Set the following in your Settings > Endpoints:
 
