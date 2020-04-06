@@ -12,7 +12,7 @@ graphQLEndpoint:
 debug: true
 
 rasa:
-  image: botfront/rasa-for-botfront:v1.7.1-bf.4
+  image: botfront/rasa-for-botfront:v1.9.0-bf.2
   initialProbeDelay: 30
 
 ducklingUrl: http://botfront-duckling-service.botfront
@@ -47,7 +47,6 @@ ingress:
 
   # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
   annotations: {}
-
   host:
   tlsSecretName:
 

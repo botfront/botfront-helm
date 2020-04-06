@@ -129,7 +129,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
 | `projectId`                           | ProjectId                                                                                                           | `bf`                                    |
 | `graphQLEndpoint`                     | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                                       | `nil`                                   |
-| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.9.0-bf.3` |
+| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.9.0-bf.2` |
 | `ingress.host`                        | Rasa instance host                                                                                                  | `nil`                                   |
 | `ingress.tlsSecretName`               | Name of the secret containing the certificate                                                                       | `nil`                                   |
 | `ingress.nginx.enableSessionAffinity` | enable sticky session see [Working with multiple rasa instances](#working-with-multiple-rasa-instances) for details | `true`                                  |
