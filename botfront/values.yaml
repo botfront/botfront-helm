@@ -134,7 +134,7 @@ mongo-express:
           - /
     tls: []
 
-redis: 
+redis:
   # Set enabled: true to deploy redis
   enabled: false
   # Redis Cluster is not able to guarantee strong consistency. 
@@ -149,4 +149,3 @@ redis:
   global:
     redis:
       password: 
-  
