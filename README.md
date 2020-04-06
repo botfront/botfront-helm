@@ -111,7 +111,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 ### Botfront
 
 | Parameter                        | Description                                                                                   | Default                 |
-| -------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------- |
+|----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
 | **`botfront.version`**           | Botfront API Docker image                                                                     | `latest`                |
 | **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
 | **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
@@ -125,13 +125,16 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 
 ## Botfront project (Rasa) parameters
 
-| Parameter           | Description                                                                                             | Default                                 |
-|---------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| `projectId`         | ProjectId                                                                                               | `bf`                                    |
-| `graphQLEndpoint`   | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                           | `nil`                                   |
-| `rasa.image`        | Rasa image                                                                                              | `botfront/rasa-for-botfront:1.7.1-bf.4` |
-| `rasa.ingress.host` | Rasa instance host                                                                                      | `nil`                                   |
-| `ducklingUrl`       | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment | `nil`                                   |
+| Parameter                             | Description                                                                                                         | Default                                 |
+|---------------------------------------|---------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| `projectId`                           | ProjectId                                                                                                           | `bf`                                    |
+| `graphQLEndpoint`                     | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                                       | `nil`                                   |
+| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.9.0-bf.3` |
+| `ingress.host`                        | Rasa instance host                                                                                                  | `nil`                                   |
+| `ingress.tlsSecretName`               | Name of the secret containing the certificate                                                                       | `nil`                                   |
+| `ingress.nginx.enableSessionAffinity` | enable sticky session see [Working with multiple rasa instances](#working-with-multiple-rasa-instances) for details | `true`                                  |
+| `ingress.nginx.enableSockets`         | enable use of sockets for conversations channels with rasa                                                          | `true`                                  |
+| `ducklingUrl`                         | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment             | `nil`                                   |
 
 ## Duckling parameters
 
@@ -147,7 +150,7 @@ If you're using Botfront in a production environment, consider adding your own d
 
 
 | Parameter                      | Description                                                                   | Default                             |
-| ------------------------------ | ----------------------------------------------------------------------------- | ----------------------------------- |
+|--------------------------------|-------------------------------------------------------------------------------|-------------------------------------|
 | **`mongodb.mongodbUsername`**  | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                              |
 | **`mongodb.mongodbPassword`**  | The password of the user accessing the Botfront database (must not be `root`) | `nil`                               |
 | `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
@@ -167,7 +170,7 @@ If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must fol
 Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Express to your deployment
 
 | Parameter                            | Description                                                   | Default                             |
-| ------------------------------------ | ------------------------------------------------------------- | ----------------------------------- |
+|--------------------------------------|---------------------------------------------------------------|-------------------------------------|
 | `mongo-express.enabled`              | Set to `true` to enable a Mongo Express deployment            | `false`                             |
 | `mongo-express.basicAuthUsername`    | The Basic Auth username to access the Mongo Express interface | `nil`                               |
 | `mongo-express.basicAuthPassword`    | The Basic Auth password to access the Mongo Express interface | `nil`                               |
@@ -226,7 +229,7 @@ TO-DO once a model server is setup
 Redis is a data structure store, used by rasa as a lockstore it ensure that incoming messages are processed in the right order.
 
 | Parameter               | Description                                               | Default |
-| ----------------------- | --------------------------------------------------------- | ------- |
+|-------------------------|-----------------------------------------------------------|---------|
 | `redis.enabled`         | Set to `true` to enable redis                             | `false` |
 | `redis.usePassword`     | Enable password authentication for connecting to redis    | `true`  |
 | `redis.global.password` | The password value, if not set will be randomly generated | `nil`   |
