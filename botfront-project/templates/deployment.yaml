@@ -36,8 +36,8 @@ spec:
           protocol: TCP
         livenessProbe:
           httpGet:
-            path: "/"
-            port: "http"
+            path: /
+            port: 5005
           initialDelaySeconds: {{ .Values.rasa.initialProbeDelay }}
           failureThreshold: 10
         resources:
