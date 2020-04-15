@@ -150,8 +150,7 @@ If you're using Botfront in a production environment, consider adding your own d
 |--------------------------------|-------------------------------------------------------------------------------|-------------------------------------|
 | **`mongodb.mongodbUsername`**  | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                              |
 | **`mongodb.mongodbPassword`**  | The password of the user accessing the Botfront database (must not be `root`) | `nil`                               |
-| `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
-| `mongodb.mongodbPort`          | MongoDB server                                                                | `27017`                             |
+| `mongodb.mongodbHostsAndPorts`          | MongoDB server                                                                | `botfront-mongodb-service.botfront:27017` |
 | `mongodb.mongodbQueryString`   | MongoDB connection query string                                               | `&retryWrites=true`                 |
 | `mongodb.mongodbRootPassword`  | MongoDB `root` password (only required if `mongodb.enabled` is set            | `nil`                               |
 | `mongodb.mongodbOplogUsername` | Optional. Considerable database performance gains                             | `nil`                               |

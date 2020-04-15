@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.botfront.app.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
   name: {{ .Release.Name }}-app-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.botfront.app.appName }}
+      app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.botfront.app.appName }}
+        app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
     spec:
       containers:
       - env:

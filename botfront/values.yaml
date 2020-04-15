@@ -76,6 +76,7 @@ botfront:
 
 duckling:
   enabled: true
+  name: duckling
   image: botfront/duckling:latest
   resources:
     requests:
