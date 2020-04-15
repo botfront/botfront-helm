@@ -88,10 +88,8 @@ mongodb:
   service:
     name: botfront-mongodb-service
     type: NodePort
-  # MongoDB host
-  mongodbHost: botfront-mongodb-service.botfront
-  # MongoDB port (make sure it's a string and not an integer)
-  mongodbPort: '27017'
+  # MongoDB hosts and ports. Comma separated lists for clusters.
+  mongodbHostsAndPorts: botfront-mongodb-service.botfront:27017
   # Name of the database containing Botfront data
   mongodbDatabase: bf
   # Query string of the MongoDB authentication database
