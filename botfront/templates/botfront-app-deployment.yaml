@@ -27,11 +27,13 @@ spec:
               key: MAIL_URL
               name: {{ .Release.Name }}-secrets
         {{- end }}
+        {{- if and .Values.mongodb.mongodbOplogUsername .Values.mongodb.mongodbOplogPassword }}
         - name: OPLOG_URL
           valueFrom:
             secretKeyRef:
               key: OPLOG_URL
               name: {{ .Release.Name }}-secrets
+        {{- end }}
         - name: PORT
           value: "3000"
         envFrom:
