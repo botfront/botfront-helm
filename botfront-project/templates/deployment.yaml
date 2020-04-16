@@ -26,6 +26,14 @@ spec:
         {{ if .Values.debug -}}
         - --debug
         {{ end -}}
+        env:
+        {{- if .Values.botfront.graphQLKey }}
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: API_KEY
+              name: {{ .Release.Name }}-rasa-secrets
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ .Release.Name }}-rasa-config
@@ -39,7 +47,7 @@ spec:
         livenessProbe:
           httpGet:
             path: "/"
-            port: "http"
+            port: 5005
           initialDelaySeconds: {{ .Values.rasa.initialProbeDelay }}
           failureThreshold: 10
         resources:

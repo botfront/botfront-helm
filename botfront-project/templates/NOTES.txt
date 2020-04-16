@@ -8,7 +8,7 @@ http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}{{ .Value
 
 nlg:
   type: 'rasa_addons.core.nlg.GraphQLNaturalLanguageGenerator'
-  url: '{{ .Values.graphQLEndpoint }}'
+  url: '{{ .Values.botfront.graphQLEndpoint }}'
 action_endpoint:
   url: 'http://your.actions.server/webhook' # Change that if you have actions
 tracker_store:

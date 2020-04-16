@@ -7,7 +7,7 @@ graphQLEndpoint: http://botfront-app-service.botfront/graphql
 debug: true
 
 rasa:
-  image: docker.io/botfront/rasa-for-botfront:v1.7.1-bf.4
+  image: docker.io/botfront/rasa-for-botfront:v1.9.0-bf.3
   initialProbeDelay: 30
 
 service:

@@ -29,6 +29,8 @@ botfront:
   # Botfront version (e.g: latest)
   version: v0.21.4
   app:
+    # an optional key to protect your graphql API (recommemded)
+    graphQLKey:
     # name used for labels and selectors
     appName: botfront
     # The complete host of the Botfront application
