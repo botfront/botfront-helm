@@ -10,6 +10,8 @@ spec:
       app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-app-configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
     spec:

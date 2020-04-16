@@ -13,6 +13,8 @@ spec:
       app: {{ .Release.Name }}-{{ .Values.appName }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Release.Name }}-{{ .Values.appName }}
     spec:
