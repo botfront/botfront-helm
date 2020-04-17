@@ -8,7 +8,7 @@ entries:
     digest: eb5cbc3d81e915109321f2b2108739c35de842934b63ab078d2651f44b42843b
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.4.1.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.4.1.tgz
     version: 0.4.1
   - apiVersion: v1
     appVersion: 0.22.0
@@ -17,7 +17,7 @@ entries:
     digest: 7abdf078bd7206b0ab3326aa057b632d5b12986ccbb89f9a22f1925f66d81123
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.4.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.4.0.tgz
     version: 0.4.0
   - apiVersion: v1
     appVersion: 0.21.4
@@ -26,7 +26,7 @@ entries:
     digest: 0f6f2be2a69d2afd60305df0fd8ae406ade52858faa893d3c3e53f5281a870fe
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.3.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v1
     appVersion: 0.20.3
@@ -35,7 +35,7 @@ entries:
     digest: 73a876c23657877a2c457ab67e85303a20f8a4197443f629f1d76003f1c7ee71
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.2.4.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.2.4.tgz
     version: 0.2.4
   - apiVersion: v1
     appVersion: 0.20.3
@@ -44,7 +44,7 @@ entries:
     digest: 5796a6b3e4e29dd0ee01eb0f78e0571f584a2e85aa67d3ae3dce90fd9029afc2
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.2.3.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.2.3.tgz
     version: 0.2.3
   - apiVersion: v1
     appVersion: 0.20.2
@@ -53,7 +53,7 @@ entries:
     digest: 90a6ef6a8f07ce0cc952f2ff6e53e66f46a15e5530fb1f7fc5a3a91d5c1c6cbc
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.2.2.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.2.2.tgz
     version: 0.2.2
   - apiVersion: v1
     appVersion: 0.20.0
@@ -62,7 +62,7 @@ entries:
     digest: d00074771675033b453a45f591388cd646e0b6762ab3d2caa49cd52effc3d685
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.2.1.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.2.1.tgz
     version: 0.2.1
   - apiVersion: v1
     appVersion: 0.20.0
@@ -71,7 +71,7 @@ entries:
     digest: 289aa2ed24837bf5e8e5cd34659f7a34469f6556ec458df5996a53ac78d1fe0c
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.2.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
@@ -80,7 +80,7 @@ entries:
     digest: b02e860be5a8e44303ac07ba46abd6f31ce70a9f1030764692e1ba2ed9f8c529
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-0.1.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.1.0.tgz
     version: 0.1.0
   botfront-project:
   - apiVersion: v1
@@ -90,7 +90,7 @@ entries:
     digest: cc8528dafc92504f618aaebe86f90969daf5dabd5a35b9c24130429751e9ab99
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.4.1.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.4.1.tgz
     version: 0.4.1
   - apiVersion: v1
     appVersion: 0.22.0
@@ -99,7 +99,7 @@ entries:
     digest: 57d0538d46b7e1becb689502833eb696aabad1fcac5d5cca89efec7e8c991965
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.4.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.4.0.tgz
     version: 0.4.0
   - apiVersion: v1
     appVersion: 0.21.4
@@ -108,7 +108,7 @@ entries:
     digest: ff44923bb838b174cfe4aa6f383e7df8ba448d95a2dc7eaf0c1e5145ccf825b9
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.3.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v1
     appVersion: 0.20.3
@@ -117,7 +117,7 @@ entries:
     digest: 579590836bd77ca0f6d5d67039ed2f62fe25a78c454fdef92b145536204a70b4
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.2.4.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.2.4.tgz
     version: 0.2.4
   - apiVersion: v1
     appVersion: 0.20.3
@@ -126,7 +126,7 @@ entries:
     digest: 6402238c2eacd0324550253110f3634f0c5c2f2a57bc3556051bac232ce067d6
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.2.3.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.2.3.tgz
     version: 0.2.3
   - apiVersion: v1
     appVersion: 0.20.2
@@ -135,7 +135,7 @@ entries:
     digest: dce648653fcd81d2d8993a0e06c33b87abfc0c98d33e21999544359e20cf6fac
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.2.2.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.2.2.tgz
     version: 0.2.2
   - apiVersion: v1
     appVersion: 0.20.0
@@ -144,6 +144,6 @@ entries:
     digest: 909aef686cce1f1e6209479f3d4284b9909ba92a89df785b135f4e3300314430
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/botfront-project-0.2.0.tgz
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.2.0.tgz
     version: 0.2.0
 generated: "2020-04-17T12:41:17.475655-04:00"
