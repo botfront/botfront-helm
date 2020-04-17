@@ -1,0 +1,38 @@
+config:
+  target: "http://rasa.botfront.local"
+  socketio:
+    path: "/socket.io"
+    transports: ["websocket"]
+  phases:
+    - duration: 10
+      arrivalCount: 1
+  # variables:
+  #   greeting: ["hello", "goedemorgen", "добрый день", "guten tag", "bonjour", "hola"]
+  # processor: "./functions.js"
+
+scenarios:
+  - name: "A user asking 10 questions"
+    engine: "socketio"
+    flow:
+      - emit:
+          channel: "user_uttered"
+          data:
+            message: /chitchat.greet
+            customData:
+              language": fr
+          response:
+            channel: bot_uttered
+            text: "1"
+      # - loop:
+      #   - emit:
+      #       channel: "user_uttered"
+      #       data:
+      #         message: "/get_started"
+      #         customData: {"language": "fr"}
+      #       response:
+      #         channel: bot_uttered
+      #         data:
+      #           text: Welcome2
+      #   - think: 5
+      #   count: 20
+    

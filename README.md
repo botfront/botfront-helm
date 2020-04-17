@@ -131,7 +131,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 | `projectId`                | ProjectId                                                                                               | `bf`                                    |
 | `botfront.graphQLEndpoint` | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                           | `nil`                                   |
 | `botfront.graphQLKey`      | Botfront GraphQL API key                                                                                | `nil`                                   |
-| `rasa.image`               | Rasa image                                                                                              | `botfront/rasa-for-botfront:1.9.0-bf.3` |
+| `rasa.image`               | Rasa image                                                                                              | `botfront/rasa-for-botfront:1.9.0-bf.5` |
 | `rasa.ingress.host`        | Rasa instance host                                                                                      | `nil`                                   |
 | `duckling.url`             | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment | `nil`                                   |
 
