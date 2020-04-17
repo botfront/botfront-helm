@@ -69,8 +69,8 @@ spec:
             port: 3000
             {{- if .Values.botfront.app.graphQLKey }}
             httpHeaders:
-            - name: Authorization
-              value: {{ .Values.botfront.app.graphQLKey | b64enc | quote }}
+            - name: authorization
+              value: {{ .Values.botfront.app.graphQLKey | quote }}
             {{- end }}
           initialDelaySeconds: {{ .Values.botfront.app.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.botfront.app.livenessProbe.periodSeconds }}
