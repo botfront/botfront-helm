@@ -11,6 +11,7 @@ spec:
   template:
     metadata:
       annotations:
+        # Force rollout restart when configmap or secret change
         checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-app-configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
