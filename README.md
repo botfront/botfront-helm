@@ -208,17 +208,18 @@ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-jso
 3. Set `botfront.imagePullSecret` to `gcr-json-key`
 
 
-## Working with multiple Rasa instances
+## Scaling Rasa instances
 
-You might need multiple Rasa instances to handle a high number of concurrent conversations.
-You will first need to set up a model server so all instances can fetch the latest model.
+Two mechanisms can ensure tracker consistency when scaling horizontally:
+- A **sticky session** ties a conversation to a single Rasa instance. So the load balancer cannot change the Rasa instance dynamically during the conversation.
+- A **lock store** centralizes the conversation state and makes sure no race condition occurs if the load balancer spreads the conversation across several instances.
 
-You can use two mechanisms to ensure tracker consistency when scaling horizontally:lock stores and sticky sessions:
-- A sticky session ties a conversation to a single Rasa instance. So the load balancer cannot change the Rasa instance dynamically during the conversation.
-- A lock store centralizes the conversation state and makes sure no race condition occurs if the load balancer spreads the conversation across several instances. 
+**Important :**
+- 1. Sockets need to stick with the same instance. **The [Rasa Webchat](https://github.com/botfront/rasa-webchat) requires session affinity**
+Rasa chart enables sticky sessions by default.
+- 2. Botfront does not provide a model server. Trained models are persisted on persistent volume that is shared across instances. However, if you have more than one instance, you need to [rollout restart](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-em-restart-em-) your Rasa deployment to make sure each instance loads the latest model.
 
-**Important :** Sockets do not support a change of rasa instance. Using the Socket.io channel (Rasa Webchat) requires session affinity. 
-Rasa chart enables sticky sessions by default
+
 
 ### Model server
 
