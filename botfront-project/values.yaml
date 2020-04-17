@@ -6,16 +6,19 @@
 appName: rasa-project
 # Botfront project id
 projectId: bf
-# Botfront GraphQL URL
-graphQLEndpoint:
 # Launch Rasa with --debug flag
 debug: true
 
 rasa:
-  image: botfront/rasa-for-botfront:v1.9.0-bf.2
+  image: botfront/rasa-for-botfront:v1.9.0-bf.5
   initialProbeDelay: 30
 
-ducklingUrl: http://botfront-duckling-service.botfront
+botfront:
+  graphQLEndpoint: http://botfront-app-service.botfront/graphql
+  graphQLKey:
+
+duckling:
+  url: http://botfront-duckling-service.botfront
 
 service:
   enabled: true

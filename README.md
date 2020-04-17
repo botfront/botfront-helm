@@ -115,6 +115,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 | **`botfront.version`**           | Botfront API Docker image                                                                     | `latest`                |
 | **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
 | **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
+| **`botfront.app.graphQLKey`**    | Key to protect the GraphQL API                                                                | `nil`                   |
 | **`botfront.api.image.name`**    | Botfront API Docker image                                                                     | `botfront/botfront-api` |
 | `botfront.ingress.enabled`       | Enable Ingress                                                                                | `true`                  |
 | `botfront.ingress.nginx.enabled` | Enable if the `nginx-ingress` controller is installed (and used) on the cluster               | `true`                  |
@@ -128,13 +129,14 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 | Parameter                             | Description                                                                                                         | Default                                 |
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
 | `projectId`                           | ProjectId                                                                                                           | `bf`                                    |
-| `graphQLEndpoint`                     | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                                       | `nil`                                   |
-| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.9.0-bf.2` |
+| `botfront.graphQLEndpoint`            | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                                       | `nil`                                   |
+| `botfront.graphQLKey`                 | Botfront GraphQL API key                                                                                            | `nil`                                   |
+| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.9.0-bf.5` |
 | `ingress.host`                        | Rasa instance host                                                                                                  | `nil`                                   |
 | `ingress.tlsSecretName`               | Name of the secret containing the certificate                                                                       | `nil`                                   |
 | `ingress.nginx.enableSessionAffinity` | enable sticky session see [Working with multiple rasa instances](#working-with-multiple-rasa-instances) for details | `true`                                  |
 | `ingress.nginx.enableSockets`         | enable use of sockets for conversations channels with rasa                                                          | `true`                                  |
-| `ducklingUrl`                         | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment             | `nil`                                   |
+| `duckling.url`                        | If set, the URL will be set as the `RASA_DUCKLING_HTTP_URL` environment variable to the Rasa deployment             | `nil`                                   |
 
 ## Duckling parameters
 
@@ -149,17 +151,16 @@ Botfront stores its data in a MongoDB database. A MongoDB deployment (`stable/mo
 If you're using Botfront in a production environment, consider adding your own deployment, or using a managed service. And configure automated backups :)
 
 
-| Parameter                      | Description                                                                   | Default                             |
-|--------------------------------|-------------------------------------------------------------------------------|-------------------------------------|
-| **`mongodb.mongodbUsername`**  | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                              |
-| **`mongodb.mongodbPassword`**  | The password of the user accessing the Botfront database (must not be `root`) | `nil`                               |
-| `mongodb.mongodbHost`          | MongoDB server                                                                | `botfront-mongodb-service.botfront` |
-| `mongodb.mongodbPort`          | MongoDB server                                                                | `27017`                             |
-| `mongodb.mongodbQueryString`   | MongoDB connection query string                                               | `&retryWrites=true`                 |
-| `mongodb.mongodbRootPassword`  | MongoDB `root` password (only required if `mongodb.enabled` is set            | `nil`                               |
-| `mongodb.mongodbOplogUsername` | Optional. Considerable database performance gains                             | `nil`                               |
-| `mongodb.mongodbOplogPassword` | Optional. Considerable database performance gains                             | `nil`                               |
-| `mongodb.enabled`              | Set to `true` to add MongoDB to this deployment                               | `false`                             |
+| Parameter                      | Description                                                                   | Default                                   |
+|--------------------------------|-------------------------------------------------------------------------------|-------------------------------------------|
+| **`mongodb.mongodbUsername`**  | The name of the user accessing the Botfront database (must not be `root`)     | `bfrw`                                    |
+| **`mongodb.mongodbPassword`**  | The password of the user accessing the Botfront database (must not be `root`) | `nil`                                     |
+| `mongodb.mongodbHostsAndPorts` | MongoDB server                                                                | `botfront-mongodb-service.botfront:27017` |
+| `mongodb.mongodbQueryString`   | MongoDB connection query string                                               | `&retryWrites=true`                       |
+| `mongodb.mongodbRootPassword`  | MongoDB `root` password (only required if `mongodb.enabled` is set            | `nil`                                     |
+| `mongodb.mongodbOplogUsername` | Optional. Considerable database performance gains                             | `nil`                                     |
+| `mongodb.mongodbOplogPassword` | Optional. Considerable database performance gains                             | `nil`                                     |
+| `mongodb.enabled`              | Set to `true` to add MongoDB to this deployment                               | `false`                                   |
 
 
 **Important**

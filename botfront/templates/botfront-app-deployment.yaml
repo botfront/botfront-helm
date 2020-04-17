@@ -2,16 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.botfront.app.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
   name: {{ .Release.Name }}-app-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.botfront.app.appName }}
+      app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
   template:
     metadata:
+      annotations:
+        # Force rollout restart when configmap or secret change
+        checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-app-configmap.yaml") . | sha256sum }}
       labels:
-        app: {{ .Values.botfront.app.appName }}
+        app: {{ .Release.Name }}-{{ .Values.botfront.app.appName }}
     spec:
       containers:
       - env:
@@ -27,11 +30,20 @@ spec:
               key: MAIL_URL
               name: {{ .Release.Name }}-secrets
         {{- end }}
+        {{- if and .Values.mongodb.mongodbOplogUsername .Values.mongodb.mongodbOplogPassword }}
         - name: OPLOG_URL
           valueFrom:
             secretKeyRef:
               key: OPLOG_URL
               name: {{ .Release.Name }}-secrets
+        {{- end }}
+        {{- if .Values.botfront.app.graphQLKey }}
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: API_KEY
+              name: {{ .Release.Name }}-secrets
+        {{- end }}
         - name: PORT
           value: "3000"
         envFrom:
@@ -56,6 +68,11 @@ spec:
           httpGet:
             path: /health
             port: 3000
+            {{- if .Values.botfront.app.graphQLKey }}
+            httpHeaders:
+            - name: authorization
+              value: {{ .Values.botfront.app.graphQLKey | quote }}
+            {{- end }}
           initialDelaySeconds: {{ .Values.botfront.app.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.botfront.app.livenessProbe.periodSeconds }}
       restartPolicy: Always

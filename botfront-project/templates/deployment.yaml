@@ -13,6 +13,9 @@ spec:
       app: {{ .Release.Name }}-{{ .Values.appName }}
   template:
     metadata:
+      annotations:
+        # Force rollout restart when configmap or secret change
+        checksum/config: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Release.Name }}-{{ .Values.appName }}
     spec:
@@ -24,6 +27,14 @@ spec:
         {{ if .Values.debug -}}
         - --debug
         {{ end -}}
+        env:
+        {{- if .Values.botfront.graphQLKey }}
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: API_KEY
+              name: {{ .Release.Name }}-rasa-secrets
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ .Release.Name }}-rasa-config
@@ -36,7 +47,7 @@ spec:
           protocol: TCP
         livenessProbe:
           httpGet:
-            path: /
+            path: "/"
             port: 5005
           initialDelaySeconds: {{ .Values.rasa.initialProbeDelay }}
           failureThreshold: 10

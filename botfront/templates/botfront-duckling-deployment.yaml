@@ -3,16 +3,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.botfront.app.appName }}
+    app: {{ .Release.Name }}-{{ .Values.duckling.name }}
   name: {{ .Release.Name }}-duckling-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.botfront.app.appName }}
+      app: {{ .Release.Name }}-{{ .Values.duckling.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.botfront.app.appName }}
+        app: {{ .Release.Name }}-{{ .Values.duckling.name }}
     spec:
       containers:
       - image: {{ .Values.duckling.image }}
