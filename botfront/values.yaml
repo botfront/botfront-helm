@@ -137,4 +137,4 @@ mongo-express:
 
 kubernetesApi:
   baseUrl:
-  token: 
+  token:

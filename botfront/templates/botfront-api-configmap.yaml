@@ -5,5 +5,8 @@ metadata:
 data:
   DEPLOYMENT_ENVIRONMENT: prod
   PORT: "8080"
-  APPLICATION_APP_LOG_TRANSPORT: {{ .Values.botfront.logs.transport }}
-  APPLICATION_APP_LOG_LEVEL: {{ .Values.botfront.logs.level }}
+  APPLICATION_APP_LOG_TRANSPORT: {{ .Values.botfront.logs.transport | quote }}
+  APPLICATION_APP_LOG_LEVEL: {{ .Values.botfront.logs.level | quote }}
+  {{if .Values.kubernetesApi.baseUrl }}
+  K8S_BASE_URL: {{ .Values.kubernetesApi.baseUrl | quote }}
+  {{- end }}

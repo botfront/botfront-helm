@@ -23,16 +23,13 @@ spec:
             secretKeyRef:
               key: MONGO_URL
               name: {{ .Release.Name }}-secrets
+        {{if .Values.kubernetesApi.token }}
         - name: K8S_API_TOKEN
           valueFrom:
             secretKeyRef:
               key: K8S_API_TOKEN
               name: {{ .Release.Name }}-secrets
-        - name: K8S_BASE_URL
-          valueFrom:
-            secretKeyRef:
-              key: K8S_BASE_URL
-              name: {{ .Release.Name }}-secrets
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ .Release.Name }}-api-config
