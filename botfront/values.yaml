@@ -133,3 +133,7 @@ mongo-express:
         paths:
           - /
     tls: []
+
+kubernetesApi:
+  baseUrl:
+  token: 
