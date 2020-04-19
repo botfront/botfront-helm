@@ -50,14 +50,17 @@ ingress:
 
   # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
   annotations: {}
-  host:
-  tlsSecretName:
 
-resources:
-  limits:
-    cpu: "2"
-    memory: 2Gi
-  requests:
-    cpu: 250m
-    memory: 512Mi
-
+environments:
+  default:
+    debug: true
+    host: rasa.botfront.local
+    path: /
+    tlsSecretName:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi

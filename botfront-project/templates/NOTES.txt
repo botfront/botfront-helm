@@ -1,21 +1,22 @@
 The Helm chart was succesfully installed on your cluster.
 Please execute the following instructions to complete your project's setup.
 
-1. Your Rasa instance is available at the following URL:
-http{{ if .Values.ingress.tlsSecretName }}s{{ end }}://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
+1. Your Rasa instances are available at the following URLs:
+{{ range $env, $val := $.Values.environments }}
+- {{ if ne $env "default"}}{{ $env }}: {{ end }}http{{ if $val.tlsSecretName }}s{{ end }}://{{ $val.host }}{{ $val.path }}
+{{- end }}
 
 2. Set the following in your Settings > Endpoints:
-
 nlg:
   type: 'rasa_addons.core.nlg.GraphQLNaturalLanguageGenerator'
   url: '{{ .Values.botfront.graphQLEndpoint }}'
 action_endpoint:
   url: 'http://your.actions.server/webhook' # Change that if you have actions
+
 tracker_store:
-  store_type: rasa_addons.core.tracker_stores.AnalyticsTrackerStore
+  store_type:  'rasa_addons.core.tracker_stores.botfront.BotfrontTrackerStore'
   # The URL below might be different if you installed Botfront in another namespace.
-  url: 'http://botfront-api-service.botfront'
-  project_id: '{{ .Values.projectId}}'
+  url: 'http://botfront-app-service.botfront/graphql'
 
 3a. If using Rasa Webchat Open Source, set the following credentials:
 
@@ -32,4 +33,6 @@ rasa_addons.core.channels.webchat_plus.WebchatPlusInput:
   socket_path: '/socket.io/'
 
 4. Set the Rasa instance internal URL in Settings > Instance:
-http://{{ .Release.Name }}-rasa-service.{{ .Release.Namespace }}
+{{ range $env, $val := $.Values.environments }}
+- {{ if ne $env "default"}}{{ $env }} :{{ end }}http://{{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service.{{ $.Release.Namespace }}
+{{- end }}

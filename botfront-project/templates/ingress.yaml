@@ -1,42 +1,47 @@
 
 {{ if .Values.ingress.enabled -}}
+{{ range $env, $val := $.Values.environments }}
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  {{- if ne .Release.Namespace "default" }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
-  name: {{ .Release.Name }}-rasa-ingress
+  labels:
+    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
+  name: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-ingress
   annotations:
-    {{- if .Values.ingress.nginx.enabled}}
-    {{- if .Values.ingress.nginx.enableSessionAffinity}}
+    {{- if $.Values.ingress.nginx.enabled}}
+    {{- if $.Values.ingress.nginx.enableSessionAffinity}}
     nginx.ingress.kubernetes.io/affinity: "cookie"
     {{- end}}
     kubernetes.io/ingress.class: nginx
-    {{- if .Values.ingress.nginx.enableSockets}}
-    nginx.org/websocket-services: {{ .Release.Name }}-rasa-service
+    {{- if $.Values.ingress.nginx.enableSockets}}
+    nginx.org/websocket-services: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
     {{- end}}
-    {{- with .Values.ingress.nginx.annotations }}
+    {{- with $.Values.ingress.nginx.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
     {{- else -}}
-    {{ with .Values.ingress.annotations }}
+    {{ with $.Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end -}}
     {{- end}}
 spec:
+  selector:
+    matchLabels:
+      app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
   rules:
-  - host: {{ .Values.ingress.host }}
+  - host: {{ $val.host }}
     http:
       paths:
       - backend:
-          serviceName: {{ .Release.Name }}-rasa-service
+          serviceName: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
           servicePort: 80
-        path: /
-  {{ if .Values.ingress.tlsSecretName -}}
+        path: {{ if $val.path }}{{ $val.path }}{{ else }}/{{ end }}
+  {{ if $val.tlsSecretName -}}
   tls:
   - hosts:
-    - {{ .Values.ingress.host }}
-    secretName: {{ .Values.ingress.tlsSecretName }}
+    - {{ $val.host }}
+    secretName: {{ $val.tlsSecretName }}
   {{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}

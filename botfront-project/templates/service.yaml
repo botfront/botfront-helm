@@ -1,20 +1,21 @@
-{{- if .Values.service.enabled -}}
+{{- if $.Values.service.enabled -}}
+{{ range $env, $val := $.Values.environments }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  {{- if ne .Release.Namespace "default" }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
   labels:
-    app: {{ .Release.Name }}-{{ .Values.appName }}
-  name: {{ .Release.Name }}-rasa-service
+    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
+    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
+  name: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
 spec:
   ports:
   - name: http
-    port: {{ .Values.service.port }}
+    port: {{ $.Values.service.port }}
     protocol: TCP
     targetPort: 5005
   selector:
-    app: {{ .Release.Name }}-{{ .Values.appName }}
-  type: {{ .Values.service.type }}
-{{ end }}
+    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
+  type: {{ $.Values.service.type }}
+{{- end }}
+{{- end }}

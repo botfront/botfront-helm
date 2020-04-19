@@ -1,13 +1,10 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rasa-config
 data:
   BF_PROJECT_ID: {{ .Values.projectId }}
   BF_URL: {{ .Values.botfront.graphQLEndpoint }}
   {{- if  .Values.duckling.url }}
   RASA_DUCKLING_HTTP_URL: {{ .Values.duckling.url }}
   {{- end }}
-kind: ConfigMap
-metadata:
-  {{- if ne .Release.Namespace "default" }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
-  name: {{ .Release.Name }}-rasa-config

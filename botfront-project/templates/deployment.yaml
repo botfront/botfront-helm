@@ -1,45 +1,43 @@
+{{ range $env, $val := $.Values.environments }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  {{- if ne .Release.Namespace "default" }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
   labels:
-    app: {{ .Release.Name }}-{{ .Values.appName }}
-  name: {{ .Release.Name }}-rasa-deployment
+    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
+  name: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-{{ .Values.appName }}
+      app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
   template:
     metadata:
-      annotations:
-        # Force rollout restart when configmap or secret change
-        checksum/config: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
-        app: {{ .Release.Name }}-{{ .Values.appName }}
+        app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
     spec:
       containers:
       - command:
         - rasa
         - run
         - --enable-api
-        {{ if .Values.debug -}}
+        {{ if $val.debug -}}
         - --debug
         {{ end -}}
         env:
-        {{- if .Values.botfront.graphQLKey }}
+        - name: ENVIRONMENT
+          value: {{ $env }}
+        {{- if $.Values.botfront.graphQLKey }}
         - name: API_KEY
           valueFrom:
             secretKeyRef:
               key: API_KEY
-              name: {{ .Release.Name }}-rasa-secrets
+              name: {{ $.Release.Name }}-rasa-secrets
         {{- end }}
         envFrom:
         - configMapRef:
-            name: {{ .Release.Name }}-rasa-config
+            name: {{ $.Release.Name }}-rasa-config
             optional: false
-        image: {{ .Values.rasa.image }}
+        image: {{ $.Values.rasa.image }}
         imagePullPolicy: IfNotPresent
         name: rasa
         ports:
@@ -49,22 +47,23 @@ spec:
           httpGet:
             path: "/"
             port: 5005
-          initialDelaySeconds: {{ .Values.rasa.initialProbeDelay }}
+          initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
           failureThreshold: 10
         resources:
-          {{- with .Values.resources }}
+          {{- with $val.resources }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- if .Values.persistenceClaim.enabled }}
+      {{- if $.Values.persistenceClaim.enabled }}
         volumeMounts:
         - mountPath: "/app/models"
-          name: {{ .Release.Name }}-rasa-volume
+          name: {{ $.Release.Name }}-rasa-volume
       volumes:
-      - name: {{ .Release.Name }}-rasa-volume
+      - name: {{ $.Release.Name }}-rasa-volume
         persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-rasa-volume-claim
+          claimName: {{ $.Release.Name }}-rasa-volume-claim
       {{- end -}}
-    {{if .Values.rasa.imagePullSecret }}
+    {{if $.Values.rasa.imagePullSecret }}
     imagePullSecrets:
-      - name: {{ .Values.rasa.imagePullSecret }}
+      - name: {{ $.Values.rasa.imagePullSecret }}
     {{end }}
+{{- end -}}
