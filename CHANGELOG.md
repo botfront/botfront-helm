@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5
+
+New `environments` section containing `resources`, `debug`, `host`, `tlsSecretName`, `path`
+
 ## 0.4
 
 ### Added

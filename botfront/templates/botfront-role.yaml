@@ -1,0 +1,81 @@
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   labels:
+#     app: {{ .Release.Name }}-{{ .Values.botfront.appName }}
+#   name: {{ .Release.Name }}-api-service-account
+#   secrets:
+#   - {{ .Release.Name }}-service-account
+
+
+# # resource "kubernetes_service_account" "k8s-api-token" {
+# #   metadata {
+# #     namespace = "${var.botfront_namespace}"
+# #     name = "api-service-account"
+# #   }
+# #   secret {
+# #     name = "api-service-account-secret"
+# #   }
+# # }
+
+# ---
+# apiVersion: v1
+# kind: Secret
+# type: kubernetes.io/service-account-token
+# metadata:
+#   labels:
+#     app: {{ .Release.Name }}-{{ .Values.botfront.appName }}
+#   name: {{ .Release.Name }}-api-secret
+#   annonations:
+#     kubernetes.io/service-account.name: {{ .Release.Name }}-api-service-account
+# # resource "kubernetes_secret" "k8s-api-token" {
+# #   metadata {
+# #     namespace = "${var.botfront_namespace}"
+# #     name = "${kubernetes_service_account.k8s-api-token.metadata.0.name}-secret"
+# #     annotations = {
+# #       "kubernetes.io/service-account.name" = "${kubernetes_service_account.k8s-api-token.metadata.0.name}"
+# #     }
+# #   }
+# #   type = "kubernetes.io/service-account-token"
+# # }
+# ---
+
+# # data "kubernetes_secret" "k8s-api-token-data" {
+# #   depends_on = ["kubernetes_secret.k8s-api-token"]
+# #   metadata {
+# #     namespace = "${var.botfront_namespace}"
+# #     name = "${kubernetes_secret.k8s-api-token.metadata.0.name}"
+# #   }
+# # }
+
+# resource "kubernetes_cluster_role" "api-role" {
+#   metadata {
+#     name = "api-role"
+#   }
+
+#   rule {
+#     api_groups = ["batch", "apps"]
+#     resources  = ["jobs", "deployments"]
+#     verbs      = ["create", "patch"]
+#   }
+# }
+
+# resource "kubernetes_cluster_role_binding" "api-role-binding" {
+#   metadata {
+#     name = "api-role-binding"
+#   }
+#   role_ref {
+#     api_group = "rbac.authorization.k8s.io"
+#     kind      = "ClusterRole"
+#     name      = "api-role"
+#   }
+
+#   subject {
+#     api_group = ""
+#     kind      = "ServiceAccount"
+#     name      = "${kubernetes_service_account.k8s-api-token.metadata.0.name}"
+#     namespace = "botfront"
+#   }
+
+#   depends_on = ["kubernetes_service_account.k8s-api-token", "kubernetes_cluster_role.api-role"]
+# }
