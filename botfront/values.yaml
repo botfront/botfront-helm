@@ -138,8 +138,8 @@ mongo-express:
 redis:
   # Set enabled: true to deploy redis
   enabled: false
-  # Redis Cluster is not able to guarantee strong consistency. 
-  # In practical terms this means that under certain conditions it is possible that Redis Cluster 
+  # Redis Cluster is not able to guarantee strong consistency.
+  # In practical terms this means that under certain conditions it is possible that Redis Cluster
   # will lose writes that were acknowledged by the system to the client.
   # So you should not use a redis cluster because rasa uses it for storing locks, thus it needs to be consistent.
   cluster:
@@ -154,3 +154,5 @@ redis:
 kubernetesApi:
   baseUrl:
   token:
+
+
