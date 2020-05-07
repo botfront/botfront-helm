@@ -24,7 +24,7 @@ spec:
         - --debug
         {{ end -}}
         env:
-        - name: ENVIRONMENT
+        - name: BOTFRONT_ENV
           value: {{ $env }}
         {{- if $.Values.botfront.graphQLKey }}
         - name: API_KEY
