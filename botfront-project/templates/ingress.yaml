@@ -26,9 +26,6 @@ metadata:
     {{- end -}}
     {{- end}}
 spec:
-  selector:
-    matchLabels:
-      app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
   rules:
   - host: {{ $val.host }}
     http:
