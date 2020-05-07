@@ -35,7 +35,9 @@ spec:
             name: {{ .Release.Name }}-api-config
             optional: false
         image: {{ .Values.botfront.api.image.name }}:{{ .Values.botfront.version }}
-        imagePullPolicy: IfNotPresent
+        {{- if .Values.botfront.api.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.botfront.api.imagePullPolicy }}
+        {{- end }}
         name: {{ .Release.Name }}-api
         ports:
         - containerPort: 8080

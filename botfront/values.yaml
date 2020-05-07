@@ -47,6 +47,7 @@ botfront:
     livenessProbe:
       initialDelaySeconds: 60
       periodSeconds: 3
+    imagePullPolicy: IfNotPresent
   api:
     # name used for labels and selectors
     appName: botfront-api
@@ -57,6 +58,7 @@ botfront:
       requests:
         cpu: 100m
         memory: 128Mi
+    imagePullPolicy: IfNotPresent
 
   ingress:
     enabled: true

@@ -51,7 +51,9 @@ spec:
             name: {{ .Release.Name }}-app-config
             optional: false
         image: {{ .Values.botfront.app.image.name }}:{{ .Values.botfront.version }}
-        imagePullPolicy: IfNotPresent
+        {{- if .Values.botfront.app.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.botfront.app.imagePullPolicy }}
+        {{- end }}
         name: {{ .Release.Name }}-app
         ports:
         - containerPort: 3000
