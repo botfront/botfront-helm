@@ -112,7 +112,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 
 | Parameter                        | Description                                                                                   | Default                 |
 |----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
-| **`botfront.version`**           | Botfront API Docker image                                                                     | `latest`                |
+| **`botfront.version`**           | Botfront API Docker image                                                                     | `v0.23.0`                |
 | **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
 | **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
 | **`botfront.app.graphQLKey`**    | Key to protect the GraphQL API                                                                | `nil`                   |

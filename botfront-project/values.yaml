@@ -10,7 +10,7 @@ projectId: bf
 debug: true
 
 rasa:
-  image: botfront/rasa-for-botfront:v1.9.0-bf.5
+  image: botfront/rasa-for-botfront:v1.9.0-bf.7
   initialProbeDelay: 30
 
 botfront:
