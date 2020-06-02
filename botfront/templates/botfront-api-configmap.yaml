@@ -14,5 +14,5 @@ data:
   GCP_PROJECT_ID: {{ .Values.botfront.cloud.gcpProjectId | quote }}
   {{- end }}
   {{if .Values.botfront.cloud.deploymentEnvironment }}
-  DEPLOYMENT_ENVIRONMENT: {{ .Values.botfront.cloud.deploymentEnvironment | quote }}
+  CLUSTER_ENVIRONMENT: {{ .Values.botfront.cloud.deploymentEnvironment | quote }}
   {{- end }}
