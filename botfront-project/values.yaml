@@ -52,7 +52,7 @@ ingress:
   annotations: {}
 
 environments:
-  default:
+  development:
     debug: true
     host: rasa.botfront.local
     path: /
