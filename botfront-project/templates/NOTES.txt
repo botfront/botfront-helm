@@ -12,10 +12,8 @@ nlg:
 action_endpoint:
   url: 'http://your.actions.server/webhook' # Change that if you have actions
 tracker_store:
-  store_type: rasa_addons.core.tracker_stores.AnalyticsTrackerStore
-  # The URL below might be different if you installed Botfront in another namespace.
-  url: 'http://botfront-api-service.botfront'
-  project_id: '{{ .Values.projectId}}'
+  store_type:  'rasa_addons.core.tracker_stores.botfront.BotfrontTrackerStore'
+  url: '{{ .Values.botfront.graphQLEndpoint }}'
 
 3a. If using Rasa Webchat Open Source, set the following credentials:
 
