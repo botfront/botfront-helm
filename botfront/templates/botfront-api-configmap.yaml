@@ -10,9 +10,11 @@ data:
   {{if .Values.kubernetesApi.baseUrl }}
   K8S_BASE_URL: {{ .Values.kubernetesApi.baseUrl | quote }}
   {{- end }}
+  {{if .Values.botfront.cloud }}
   {{if .Values.botfront.cloud.gcpProjectId }}
   GCP_PROJECT_ID: {{ .Values.botfront.cloud.gcpProjectId | quote }}
   {{- end }}
   {{if .Values.botfront.cloud.deploymentEnvironment }}
   CLUSTER_ENVIRONMENT: {{ .Values.botfront.cloud.deploymentEnvironment | quote }}
+  {{- end }}
   {{- end }}
