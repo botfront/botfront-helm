@@ -34,11 +34,27 @@ spec:
           serviceName: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
           servicePort: 80
         path: {{ if $val.path }}{{ $val.path }}{{ else }}/{{ end }}
+
+  {{ if eq $env "development"}}
+  - host: {{ $val.host_legacy }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
+          servicePort: 80
+        path: {{ if $val.path }}{{ $val.path }}{{ else }}/{{ end }}
+  {{- end}}
+
   {{ if $val.tlsSecretName -}}
   tls:
   - hosts:
     - {{ $val.host }}
     secretName: {{ $val.tlsSecretName }}
+  {{ if eq $env "development"}}
+  - hosts:
+    - {{ $val.host_legacy }}
+    secretName: {{ $val.legacyTlsSecretName }}
+  {{- end -}}
   {{- end -}}
 {{- end }}
 {{- end }}
