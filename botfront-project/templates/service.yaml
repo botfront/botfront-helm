@@ -1,11 +1,28 @@
 {{- if $.Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  {{- if ne .Release.Namespace "default" }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    app: {{ .Release.Name }}-development-{{ .Values.appName }}
+  name: {{ .Release.Name }}-rasa-service
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    protocol: TCP
+    targetPort: 5005
+  selector:
+    app: {{ .Release.Name }}-development-{{ .Values.appName }}
+  type: {{ .Values.service.type }}
 {{ range $env, $val := $.Values.environments }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
     app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
   name: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-service
 spec:
