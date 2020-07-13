@@ -35,7 +35,7 @@ spec:
         {{- end }}
         envFrom:
         - configMapRef:
-            name: {{ $.Release.Name }}-rasa-config
+            name: {{ $.Release.Name }}-rasa-config-{{ $env }}
             optional: false
         image: {{ $.Values.rasa.image }}
         imagePullPolicy: IfNotPresent
@@ -47,8 +47,9 @@ spec:
           httpGet:
             path: "/"
             port: 5005
-          initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
-          failureThreshold: 10
+          initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}
+          periodSeconds: {{ $.Values.rasa.livenessProbe.periodSeconds }}
+          failureThreshold: {{ $.Values.rasa.livenessProbe.failureThreshold }}
         resources:
           {{- with $val.resources }}
           {{- toYaml . | nindent 12 }}

@@ -1,0 +1,89 @@
+{{- if .Values.botfront.portal.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+  name: {{ .Release.Name }}-portal-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+  template:
+    metadata:
+      annotations:
+        # Force rollout restart when configmap or secret change
+        checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-api-configmap.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-portal
+        image: {{ .Values.botfront.portal.image.name}}
+        ports:
+        - containerPort: 5056
+          protocol: TCP
+        resources:
+          {{- with .Values.botfront.portal.resources }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5056
+      restartPolicy: Always
+      {{if .Values.botfront.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.botfront.imagePullSecret }}
+      {{end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+  name: {{ .Release.Name }}-portal-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 5056
+  selector:
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+  type: NodePort
+---
+{{- if .Values.botfront.ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-portal-ingress
+  annotations:
+    {{if .Values.botfront.ingress.nginx.enabled -}}
+    kubernetes.io/ingress.class: nginx
+    {{- with .Values.botfront.ingress.nginx.annotations -}}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- else -}}
+    {{with .Values.botfront.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{ end }}
+    {{- end }}
+spec:
+  rules:
+  - host: {{ .Values.botfront.portal.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Release.Name }}-portal-service
+          servicePort: 80
+        path: /
+  {{ if .Values.botfront.ingress.tlsSecretName -}}
+  tls:
+  - hosts:
+    - {{ .Values.botfront.ingress.tlsHost | quote }}
+    secretName: {{ .Values.botfront.ingress.tlsSecretName }}
+  {{- end -}}
+{{- end -}}
+
+{{- end -}}

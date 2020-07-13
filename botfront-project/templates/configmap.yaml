@@ -1,10 +1,17 @@
+{{ range $env, $val := $.Values.environments }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-rasa-config
+  name: {{ $.Release.Name }}-rasa-config-{{ $env }}
 data:
-  BF_PROJECT_ID: {{ .Values.projectId }}
-  BF_URL: {{ .Values.botfront.graphQLEndpoint }}
-  {{- if  .Values.duckling.url }}
-  RASA_DUCKLING_HTTP_URL: {{ .Values.duckling.url }}
+  BF_PROJECT_ID: {{  $.Values.projectId }}
+  BF_URL: {{ $.Values.botfront.graphQLEndpoint }}
+  {{- if  $.Values.duckling.url }}
+  RASA_DUCKLING_HTTP_URL: {{ $.Values.duckling.url }}
   {{- end }}
+  RASA_URL: http{{ if eq $env "production"}}s{{ end }}://{{ $val.host }}
+  {{- if  $.Values.portal.url }}
+  BF_PORTAL_URL: {{ $.Values.portal.url}}
+  {{- end }}
+{{- end -}}
