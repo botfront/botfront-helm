@@ -77,6 +77,8 @@ botfront:
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
     tlsHost:
+    # If you are using Botfront Enterprise
+    # licenseKey:
 
 duckling:
   enabled: true
