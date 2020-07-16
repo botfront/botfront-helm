@@ -2,16 +2,16 @@ apiVersion: v1
 entries:
   botfront:
   - apiVersion: v1
-    appVersion: 0.23.0
+    appVersion: 0.25.3
     created: "2020-06-09T14:32:51.43917-04:00"
     description: A Helm chart for Botfront
     digest: fda98983df7c93300489b423b93087ce05180ac3c8e59f923acf4b6c2bc32d9d
     name: botfront
     urls:
-    - https://botfront.github.io/botfront-helm/charts/botfront-0.4.3.tgz
-    version: 0.4.3
+    - https://botfront.github.io/botfront-helm/charts/botfront-0.5.0.tgz
+    version: 0.5.0
   - apiVersion: v1
-    appVersion: 0.23.0
+    appVersion: 0.25.3
     created: "2020-06-09T14:32:51.432573-04:00"
     description: A Helm chart for Botfront
     digest: f2aa345cb8b725bdc3c5a6a55f7a180dbf256703e6d635477354bd6c4d455a96
@@ -102,16 +102,16 @@ entries:
     version: 0.1.0
   botfront-project:
   - apiVersion: v1
-    appVersion: 0.23.0
+    appVersion: 0.25.3
     created: "2020-06-09T14:32:51.441442-04:00"
     description: A Helm chart for Botfront projects
     digest: 274cfb3d79fef6fceced8eb1c0b5793cdafd1ed4d6fad0cd6e2dcb7f7092c16e
     name: botfront-project
     urls:
-    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.4.3.tgz
-    version: 0.4.3
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-0.5.0.tgz
+    version: 0.5.0
   - apiVersion: v1
-    appVersion: 0.23.0
+    appVersion: 0.25.3
     created: "2020-06-09T14:32:51.441184-04:00"
     description: A Helm chart for Botfront projects
     digest: a046262c22a4cfefec988b76904aaae9b9962a6fa788c27a36d0f5a961bac3a1

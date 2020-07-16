@@ -9,8 +9,11 @@ projectId: bf
 # Launch Rasa with --debug flag
 debug: true
 
+
 rasa:
-  image: botfront/rasa-for-botfront:v1.10.0-bf.7
+  image: botfront/rasa-for-botfront:v1.10.3-bf.2
+
+
   livenessProbe:
     initialProbeDelay: 30
     periodSeconds: 10
