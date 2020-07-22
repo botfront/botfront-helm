@@ -9,9 +9,15 @@ projectId: bf
 # Launch Rasa with --debug flag
 debug: true
 
+
 rasa:
-  image: botfront/rasa-for-botfront:v1.9.0-bf.7
-  initialProbeDelay: 30
+  image: botfront/rasa-for-botfront:v1.10.3-bf.2
+
+
+  livenessProbe:
+    initialProbeDelay: 30
+    periodSeconds: 10
+    failureThreshold: 10
 
 botfront:
   graphQLEndpoint: http://botfront-app-service.botfront/graphql
@@ -57,6 +63,7 @@ environments:
     host: rasa.botfront.local
     path: /
     tlsSecretName:
+    envVars:
     resources:
       limits:
         cpu: "2"

@@ -44,6 +44,13 @@ spec:
               key: API_KEY
               name: {{ .Release.Name }}-secrets
         {{- end }}
+        {{- if .Values.botfront.licenseKey }}
+        - name: LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: LICENSE_KEY
+              name: {{ .Release.Name }}-secrets
+        {{- end }}
         - name: PORT
           value: "3000"
         envFrom:

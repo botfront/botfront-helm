@@ -27,7 +27,7 @@ botfront:
     # Stack driver audit logger name
     loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
-  version: v0.23.0
+  version: v0.25.3
   app:
     # an optional key to protect your graphql API (recommemded)
     graphQLKey:
@@ -77,6 +77,8 @@ botfront:
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
     tlsHost:
+    # If you are using Botfront Enterprise
+  # licenseKey:
 
 duckling:
   enabled: true
