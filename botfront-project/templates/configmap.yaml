@@ -10,7 +10,7 @@ data:
   {{- if  $.Values.duckling.url }}
   RASA_DUCKLING_HTTP_URL: {{ $.Values.duckling.url }}
   {{- end }}
-  RASA_URL: http{{ if eq $env "production"}}s{{ end }}://{{ $val.host }}
+  RASA_URL: http://{{ $.Release.Name }}-rasa-service.{{ $.Release.Namespace }}
   {{- if  $.Values.portal.url }}
   BF_PORTAL_URL: {{ $.Values.portal.url}}
   {{- end }}

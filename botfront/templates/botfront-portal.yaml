@@ -1,36 +1,57 @@
-{{- if .Values.botfront.portal.enabled -}}
+{{- if .Values.portal.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
   name: {{ .Release.Name }}-portal-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+      app: {{ .Release.Name }}-{{ .Values.portal.appName }}
   template:
     metadata:
       annotations:
         # Force rollout restart when configmap or secret change
         checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-api-configmap.yaml") . | sha256sum }}
       labels:
-        app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+        app: {{ .Release.Name }}-{{ .Values.portal.appName }}
     spec:
+      
       containers:
       - name: {{ .Release.Name }}-portal
-        image: {{ .Values.botfront.portal.image.name}}
+        image: {{ .Values.portal.image.name}}
         ports:
         - containerPort: 5056
           protocol: TCP
         resources:
-          {{- with .Values.botfront.portal.resources }}
+          {{- with .Values.portal.resources }}
           {{- toYaml . | nindent 10 }}
           {{- end }}
         livenessProbe:
           httpGet:
             path: /
             port: 5056
+        env:
+        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientID }}
+        - name: SLACK_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: SLACK_CLIENT_ID
+              name: {{ .Release.Name }}-secrets
+        {{- end }}
+        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientSecret }}
+        - name: SLACK_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: SLACK_CLIENT_SECRET
+              name: {{ .Release.Name }}-secrets
+        {{- end }}
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_URL
+              name: {{ .Release.Name }}-secrets
       restartPolicy: Always
       {{if .Values.botfront.imagePullSecret }}
       imagePullSecrets:
@@ -41,7 +62,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
   name: {{ .Release.Name }}-portal-service
 spec:
   ports:
@@ -50,7 +71,7 @@ spec:
     protocol: TCP
     targetPort: 5056
   selector:
-    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
   type: NodePort
 ---
 {{- if .Values.botfront.ingress.enabled -}}
@@ -71,7 +92,7 @@ metadata:
     {{- end }}
 spec:
   rules:
-  - host: {{ .Values.botfront.portal.host }}
+  - host: {{ .Values.portal.host }}
     http:
       paths:
       - backend:
@@ -85,5 +106,4 @@ spec:
     secretName: {{ .Values.botfront.ingress.tlsSecretName }}
   {{- end -}}
 {{- end -}}
-
 {{- end -}}

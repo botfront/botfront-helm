@@ -6,6 +6,10 @@
 #     runAsUser: ""
 #     fsGroup: ""
 
+portal:
+  slack:
+    clientSecret:
+
 # Default values for botfront.
 botfront:
   imagePullSecret:
