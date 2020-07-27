@@ -47,6 +47,13 @@ spec:
               key: SLACK_CLIENT_SECRET
               name: {{ .Release.Name }}-secrets
         {{- end }}
+        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.signingSecret }}
+        - name: SLACK_SIGNING_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: SLACK_SIGNING_SECRET
+              name: {{ .Release.Name }}-secrets
+        {{- end }}
         - name: MONGO_URL
           valueFrom:
             secretKeyRef:

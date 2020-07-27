@@ -1,14 +1,9 @@
-# OpenShift only
-# --------------
-# Uncomment and configure the following if you encounter "Error creating: pods "..." is forbidden: unable to validate against any security context constraint"
-# securityContext:
-#     runAsNonRoot: true
-#     runAsUser: ""
-#     fsGroup: ""
 
-portal:
-  slack:
-    clientSecret:
+# portal:
+#   slack:
+#     clientSecret:
+#     clientID:
+#     signingSecret:
 
 # Default values for botfront.
 botfront:
