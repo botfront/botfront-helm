@@ -22,7 +22,7 @@ spec:
       - backend:
           serviceName: {{ .Release.Name }}-app-service
           servicePort: 80
-        path: /
+        path: {{ .Values.botfront.ingress.path }}
   {{ if .Values.botfront.ingress.tlsSecretName -}}
   tls:
   - hosts:

@@ -1,4 +1,29 @@
 {{- if .Values.portal.enabled -}}
+apiVersion: "v1"
+kind: "Secret"
+metadata:
+  name: {{ .Release.Name }}-portal-secrets
+type: "Opaque"
+data:
+  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientSecret }}
+  SLACK_CLIENT_SECRET: {{.Values.portal.slack.clientSecret | toString | b64enc | quote }}
+  {{- end }}
+  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientID }}
+  SLACK_CLIENT_ID: {{.Values.portal.slack.clientID | toString | b64enc | quote }}
+  {{- end }}
+  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.signingSecret }}
+  SLACK_SIGNING_SECRET: {{.Values.portal.slack.signingSecret | toString | b64enc | quote }}
+  {{- end }}
+  MONGO_URL: {{ printf "mongodb://%s:%s@%s/%s?%s" .Values.mongodb.mongodbUsername .Values.mongodb.mongodbPassword .Values.mongodb.mongodbHostsAndPorts .Values.mongodb.mongodbDatabase .Values.mongodb.mongodbQueryString | b64enc | quote }}
+
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ .Release.Name }}-portal-config
+data:
+  BF_REDIRECT_URL: "{{ .Values.botfront.app.protocol }}://{{ .Values.botfront.app.host }}{{ .Values.botfront.ingress.path }}"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,7 +42,6 @@ spec:
       labels:
         app: {{ .Release.Name }}-{{ .Values.portal.appName }}
     spec:
-      
       containers:
       - name: {{ .Release.Name }}-portal
         image: {{ .Values.portal.image.name}}
@@ -38,27 +62,32 @@ spec:
           valueFrom:
             secretKeyRef:
               key: SLACK_CLIENT_ID
-              name: {{ .Release.Name }}-secrets
+              name: {{ .Release.Name }}-portal-secrets
         {{- end }}
         {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientSecret }}
         - name: SLACK_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               key: SLACK_CLIENT_SECRET
-              name: {{ .Release.Name }}-secrets
+              name: {{ .Release.Name }}-portal-secrets
         {{- end }}
         {{if and .Values.portal .Values.portal.slack .Values.portal.slack.signingSecret }}
         - name: SLACK_SIGNING_SECRET
           valueFrom:
             secretKeyRef:
               key: SLACK_SIGNING_SECRET
-              name: {{ .Release.Name }}-secrets
+              name: {{ .Release.Name }}-portal-secrets
         {{- end }}
         - name: MONGO_URL
           valueFrom:
             secretKeyRef:
               key: MONGO_URL
-              name: {{ .Release.Name }}-secrets
+              name: {{ .Release.Name }}-portal-secrets
+        - name: BF_URL
+          valueFrom:
+            configMapKeyRef:
+              key: BF_REDIRECT_URL
+              name: {{ .Release.Name }}-portal-config
       restartPolicy: Always
       {{if .Values.botfront.imagePullSecret }}
       imagePullSecrets:

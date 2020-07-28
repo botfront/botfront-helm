@@ -58,8 +58,8 @@ botfront:
         cpu: 100m
         memory: 128Mi
     imagePullPolicy: IfNotPresent
-
   ingress:
+    path: /
     enabled: true
     nginx:
       # Set to true if your cluster uses the nginx-ingress controller
@@ -69,14 +69,13 @@ botfront:
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
-
     # If nginx.enabled is false, the following annotations will be added to the Ingress. This is ignored it nginx.enabled is true.
     annotations: []
     # Secret name containing the certificate
     tlsSecretName:
     # Host associated with the certificate. Might be different from app.host (could contain a wildcard)
     tlsHost:
-    # If you are using Botfront Enterprise
+  # If you are using Botfront Enterprise
   # licenseKey:
 
 duckling:
