@@ -1,20 +1,20 @@
-{{- if .Values.portal.enabled -}}
+{{- if .Values.botfront.portal.enabled -}}
 apiVersion: "v1"
 kind: "Secret"
 metadata:
   name: {{ .Release.Name }}-portal-secrets
 type: "Opaque"
 data:
-  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientSecret }}
-  SLACK_CLIENT_SECRET: {{.Values.portal.slack.clientSecret | toString | b64enc | quote }}
+  {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.clientSecret }}
+  SLACK_CLIENT_SECRET: {{.Values.botfront.portal.slack.clientSecret | toString | b64enc | quote }}
   {{- end }}
-  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientID }}
-  SLACK_CLIENT_ID: {{.Values.portal.slack.clientID | toString | b64enc | quote }}
+  {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.clientID }}
+  SLACK_CLIENT_ID: {{.Values.botfront.portal.slack.clientID | toString | b64enc | quote }}
   {{- end }}
-  {{if and .Values.portal .Values.portal.slack .Values.portal.slack.signingSecret }}
-  SLACK_SIGNING_SECRET: {{.Values.portal.slack.signingSecret | toString | b64enc | quote }}
+  {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.signingSecret }}
+  SLACK_SIGNING_SECRET: {{.Values.botfront.portal.slack.signingSecret | toString | b64enc | quote }}
   {{- end }}
-  MONGO_URL: {{ printf "mongodb://%s:%s@%s/%s?%s" .Values.mongodb.mongodbUsername .Values.mongodb.mongodbPassword .Values.mongodb.mongodbHostsAndPorts .Values.mongodb.mongodbDatabase .Values.mongodb.mongodbQueryString | b64enc | quote }}
+  MONGO_URL: {{ printf "mongodb://%s:%s@%s/%s?%s" .Values.botfront.portal.mongodb.mongodbUsername .Values.botfront.portal.mongodb.mongodbPassword .Values.botfront.portal.mongodb.mongodbHostsAndPorts .Values.botfront.portal.mongodb.mongodbDatabase .Values.botfront.portal.mongodb.mongodbQueryString | b64enc | quote }}
 
 ---
 apiVersion: "v1"
@@ -28,28 +28,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
   name: {{ .Release.Name }}-portal-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-{{ .Values.portal.appName }}
+      app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
   template:
     metadata:
       annotations:
         # Force rollout restart when configmap or secret change
         checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-api-configmap.yaml") . | sha256sum }}
       labels:
-        app: {{ .Release.Name }}-{{ .Values.portal.appName }}
+        app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
     spec:
       containers:
       - name: {{ .Release.Name }}-portal
-        image: {{ .Values.portal.image.name}}
+        image: {{ .Values.botfront.portal.image.name}}
         ports:
         - containerPort: 5056
           protocol: TCP
         resources:
-          {{- with .Values.portal.resources }}
+          {{- with .Values.botfront.portal.resources }}
           {{- toYaml . | nindent 10 }}
           {{- end }}
         livenessProbe:
@@ -57,21 +57,21 @@ spec:
             path: /
             port: 5056
         env:
-        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientID }}
+        {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.clientID }}
         - name: SLACK_CLIENT_ID
           valueFrom:
             secretKeyRef:
               key: SLACK_CLIENT_ID
               name: {{ .Release.Name }}-portal-secrets
         {{- end }}
-        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.clientSecret }}
+        {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.clientSecret }}
         - name: SLACK_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               key: SLACK_CLIENT_SECRET
               name: {{ .Release.Name }}-portal-secrets
         {{- end }}
-        {{if and .Values.portal .Values.portal.slack .Values.portal.slack.signingSecret }}
+        {{if and .Values.botfront.portal .Values.botfront.portal.slack .Values.botfront.portal.slack.signingSecret }}
         - name: SLACK_SIGNING_SECRET
           valueFrom:
             secretKeyRef:
@@ -98,7 +98,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
   name: {{ .Release.Name }}-portal-service
 spec:
   ports:
@@ -107,7 +107,7 @@ spec:
     protocol: TCP
     targetPort: 5056
   selector:
-    app: {{ .Release.Name }}-{{ .Values.portal.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.portal.appName }}
   type: NodePort
 ---
 {{- if .Values.botfront.ingress.enabled -}}
@@ -128,7 +128,7 @@ metadata:
     {{- end }}
 spec:
   rules:
-  - host: {{ .Values.portal.host }}
+  - host: {{ .Values.botfront.portal.host }}
     http:
       paths:
       - backend:
