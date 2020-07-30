@@ -9,15 +9,15 @@ projectId: bf
 # Launch Rasa with --debug flag
 debug: true
 
-
 rasa:
-  image: botfront/rasa-for-botfront:v1.10.3-bf.2
-
-
+  image: botfront/rasa-for-botfront:v1.10.3-bf.3
   livenessProbe:
     initialProbeDelay: 30
     periodSeconds: 10
     failureThreshold: 10
+  securityContext:
+    runAsUser: 0
+    runAsGroup: 0
 
 botfront:
   graphQLEndpoint: http://botfront-app-service.botfront/graphql

@@ -26,7 +26,7 @@ botfront:
     # Stack driver audit logger name
     loggerName: botfront-audit-log
   # Botfront version (e.g: latest)
-  version: v0.25.3
+  version: v0.25.8
   app:
     # an optional key to protect your graphql API (recommemded)
     graphQLKey:
