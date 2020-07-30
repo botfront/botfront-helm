@@ -15,6 +15,9 @@ spec:
       labels:
         app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
     spec:
+      securityContext:
+        runAsUser: {{ $.Values.rasa.securityContext.runAsUser }}
+        runAsGroup: {{ $.Values.rasa.securityContext.runAsGroup }}
       containers:
       - command:
         - rasa
