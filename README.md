@@ -188,27 +188,6 @@ Mongo Express is a web-based client for MongoDB. You can optionally add Mongo Ex
 If you are using the provided MongoDB deployment, `mongodb.mongodbHost` must follow the following pattern: `<release-name>-mongodb-service.<namespace>`
 
 
-## Authenticating to Botfront private repo (Enterprise Edition Customers)
-
-Once you obtain your `key.json` file:
-
-1. Create a `docker-registry` secret in your cluster
-```bash
-kubectl create secret docker-registry gcr-json-key \
-  --docker-server=https://gcr.io \
-  --docker-username=_json_key \
-  --docker-password="$(cat key.json)" \
-  --namespace botfront
-```
-
-2. Patch the `default` service account (or the service account pulling images in your pods) **in the namespace Botfront is deployed**.
-```
-kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}' --namespace botfront
-```
-
-3. Set `botfront.imagePullSecret` to `gcr-json-key`
-
-
 ## Scaling Rasa instances
 
 Two mechanisms can ensure tracker consistency when scaling horizontally:
@@ -255,3 +234,28 @@ lock_store:
 This is enabled by default.
 If you are using a lockstore, you will need to disable it or the lockstore serve it purpose.
 in your rasa values set `ingress.nginx.enableSessionAffinity to `false`
+
+## Enterprise Edition
+
+### Authenticating to Botfront private Docker registry
+
+Once you obtain your `key.json` file:
+
+1. Create a `docker-registry` secret in your cluster
+```bash
+kubectl create secret docker-registry gcr-json-key \
+  --docker-server=https://gcr.io \
+  --docker-username=_json_key \
+  --docker-password="$(cat key.json)" \
+  --namespace botfront
+```
+
+2. Patch the `default` service account (or the service account pulling images in your pods) **in the namespace Botfront is deployed in**.
+```
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}' --namespace botfront
+```
+
+3. Set `botfront.imagePullSecret` to `gcr-json-key`
+
+4. Set the `botfront.licenseKey` variable with your key
+
