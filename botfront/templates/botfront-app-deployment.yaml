@@ -57,7 +57,7 @@ spec:
         - configMapRef:
             name: {{ .Release.Name }}-app-config
             optional: false
-        image: {{ .Values.botfront.app.image.name }}:{{ .Values.botfront.version }}
+        image: {{ .Values.botfront.app.image.name }}:{{ .Values.botfront.app.version }}
         {{- if .Values.botfront.app.imagePullPolicy }}
         imagePullPolicy: {{ .Values.botfront.app.imagePullPolicy }}
         {{- end }}

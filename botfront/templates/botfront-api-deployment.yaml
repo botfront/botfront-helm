@@ -34,7 +34,7 @@ spec:
         - configMapRef:
             name: {{ .Release.Name }}-api-config
             optional: false
-        image: {{ .Values.botfront.api.image.name }}:{{ .Values.botfront.version }}
+        image: {{ .Values.botfront.api.image.name }}:{{ .Values.botfront.api.version }}
         {{- if .Values.botfront.api.imagePullPolicy }}
         imagePullPolicy: {{ .Values.botfront.api.imagePullPolicy }}
         {{- end }}
