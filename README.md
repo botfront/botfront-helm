@@ -43,8 +43,9 @@ mongodb:
 ```
 
 
+
 ```bash
-helm install -f config.yaml -n botfront --namespace botfront botfront/botfront
+helm install botfront -f config.yaml  --namespace botfront botfront/botfront --create-namespace
 ```
 
 Upgrading:
