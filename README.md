@@ -236,11 +236,9 @@ This is enabled by default.
 If you are using a lockstore, you will need to disable it or the lockstore serve it purpose.
 in your rasa values set `ingress.nginx.enableSessionAffinity to `false`
 
-## Enterprise Edition
+### Pulling from a CGP private registry
 
-### Authenticating to Botfront private Docker registry
-
-Once you obtain your `key.json` file:
+Obtain your `key.json` file:
 
 1. Create a `docker-registry` secret in your cluster
 ```bash
@@ -257,6 +255,3 @@ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-jso
 ```
 
 3. Set `botfront.imagePullSecret` to `gcr-json-key`
-
-4. Set the `botfront.licenseKey` variable with your key
-
