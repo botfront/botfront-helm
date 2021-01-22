@@ -50,9 +50,10 @@ botfront:
       initialDelaySeconds: 60
       periodSeconds: 3
     imagePullPolicy: IfNotPresent
-  api:
+  webhooks:
+    enabled: true
     # name used for labels and selectors
-    appName: botfront-api
+    appName: botfront-webhooks
     version: v0.27.5
     image:
       # Botfront API image name (e.g: botfront/botfront)

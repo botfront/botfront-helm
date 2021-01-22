@@ -1,3 +1,4 @@
+{{- if .Values.botfront.webhooks.enabled -}}
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
@@ -17,3 +18,4 @@ data:
   CLUSTER_ENVIRONMENT: {{ .Values.botfront.cloud.deploymentEnvironment | quote }}
   {{- end }}
   {{- end }}
+{{ end }}

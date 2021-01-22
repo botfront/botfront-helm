@@ -1,9 +1,11 @@
+{{- if .Values.botfront.webhooks.enabled -}}
+
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.botfront.api.appName }}
-  name: {{ .Release.Name }}-api-service
+    app: {{ .Release.Name }}-{{ .Values.botfront.webhooks.appName }}
+  name: {{ .Release.Name }}-webhooks-service
 spec:
   ports:
   - name: http
@@ -11,5 +13,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: {{ .Release.Name }}-{{ .Values.botfront.api.appName }}
+    app: {{ .Release.Name }}-{{ .Values.botfront.webhooks.appName }}
   type: NodePort
+{{ end }}
