@@ -10,8 +10,8 @@ Both charts need to be installed.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 2.11+
+- Kubernetes 1.18+
+- Helm 3.4+
 - Persistent volume provisioner support in the underlying infrastructure
 
 ## Add the repository
@@ -80,7 +80,7 @@ action_endpoint:
 tracker_store:
   store_type: rasa_addons.core.tracker_stores.AnalyticsTrackerStore
   # The URL below might be different if you installed Botfront in another namespace.
-  url: 'http://botfront-api-service.botfront'
+  url: 'http://botfront-webhooks-service.botfront'
   project_id: 'bf'
 
 3a. If using Rasa Webchat Open Source, set the following credentials:
