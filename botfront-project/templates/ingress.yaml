@@ -36,7 +36,7 @@ spec:
         path: {{ if $val.path }}{{ $val.path }}{{ else }}/{{ end }}
 
   {{ if eq $env "development"}}
-  - host: {{ $val.host_legacy }}
+  - host: {{ $val.host }}
     http:
       paths:
       - backend:
@@ -50,11 +50,6 @@ spec:
   - hosts:
     - {{ $val.host }}
     secretName: {{ $val.tlsSecretName }}
-  {{ if eq $env "development"}}
-  - hosts:
-    - {{ $val.host_legacy }}
-    secretName: {{ $val.legacyTlsSecretName }}
-  {{- end -}}
   {{- end -}}
 {{- end }}
 {{- end }}
