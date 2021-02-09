@@ -94,6 +94,7 @@ duckling:
       memory: 128Mi
 
 mongodb:
+  mongodbPrefix: 'mongodb'
   # Wether a MongoDB instance should be deployed as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas
   enabled: false
   service:
