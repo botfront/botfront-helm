@@ -26,9 +26,11 @@ botfront:
     transport: console
     # Stack driver audit logger name
     loggerName: botfront-audit-log
-  # Botfront version (e.g: latest)
-  version: v0.27.2
+  
+  
   app:
+  # Botfront version (e.g: latest)
+    version: v1.0.0-ee.1-rc.3
     # an optional key to protect your graphql API (recommemded)
     graphQLKey:
     # name used for labels and selectors
@@ -48,9 +50,11 @@ botfront:
       initialDelaySeconds: 60
       periodSeconds: 3
     imagePullPolicy: IfNotPresent
-  api:
+  webhooks:
+    enabled: true
     # name used for labels and selectors
-    appName: botfront-api
+    appName: botfront-webhooks
+    version: v0.27.5
     image:
       # Botfront API image name (e.g: botfront/botfront)
       name: botfront/botfront-api
@@ -90,6 +94,7 @@ duckling:
       memory: 128Mi
 
 mongodb:
+  mongodbPrefix: 'mongodb'
   # Wether a MongoDB instance should be deployed as part of this chart. Set this to false if you want to use an external MongoDB provider, such as Atlas
   enabled: false
   service:

@@ -10,8 +10,8 @@ Both charts need to be installed.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 2.11+
+- Kubernetes 1.18+
+- Helm 3.4+
 - Persistent volume provisioner support in the underlying infrastructure
 
 ## Add the repository
@@ -43,8 +43,9 @@ mongodb:
 ```
 
 
+
 ```bash
-helm install -f config.yaml -n botfront --namespace botfront botfront/botfront
+helm install botfront -f config.yaml  --namespace botfront botfront/botfront --create-namespace
 ```
 
 Upgrading:
@@ -79,7 +80,7 @@ action_endpoint:
 tracker_store:
   store_type: rasa_addons.core.tracker_stores.AnalyticsTrackerStore
   # The URL below might be different if you installed Botfront in another namespace.
-  url: 'http://botfront-api-service.botfront'
+  url: 'http://botfront-webhooks-service.botfront'
   project_id: 'bf'
 
 3a. If using Rasa Webchat Open Source, set the following credentials:
@@ -112,7 +113,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 
 | Parameter                        | Description                                                                                   | Default                 |
 |----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
-| **`botfront.version`**           | Botfront API Docker image                                                                     | `v0.27.2`               |
+| **`botfront.version`**           | Botfront API Docker image                                                                     | `v1.0.0-rc4`               |
 | **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
 | **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
 | **`botfront.app.graphQLKey`**    | Key to protect the GraphQL API                                                                | `nil`                   |
@@ -235,11 +236,9 @@ This is enabled by default.
 If you are using a lockstore, you will need to disable it or the lockstore serve it purpose.
 in your rasa values set `ingress.nginx.enableSessionAffinity to `false`
 
-## Enterprise Edition
+### Pulling from a CGP private registry
 
-### Authenticating to Botfront private Docker registry
-
-Once you obtain your `key.json` file:
+Obtain your `key.json` file:
 
 1. Create a `docker-registry` secret in your cluster
 ```bash
@@ -256,6 +255,3 @@ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-jso
 ```
 
 3. Set `botfront.imagePullSecret` to `gcr-json-key`
-
-4. Set the `botfront.licenseKey` variable with your key
-

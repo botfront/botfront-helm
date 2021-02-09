@@ -1,20 +1,21 @@
+{{- if .Values.botfront.webhooks.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Release.Name }}-{{ .Values.botfront.api.appName }}
-  name: {{ .Release.Name }}-api-deployment
+    app: {{ .Release.Name }}-{{ .Values.botfront.webhooks.appName }}
+  name: {{ .Release.Name }}-webhooks-deployment
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-{{ .Values.botfront.api.appName }}
+      app: {{ .Release.Name }}-{{ .Values.botfront.webhooks.appName }}
   template:
     metadata:
       annotations:
         # Force rollout restart when configmap or secret change
         checksum/config: {{ include (print $.Template.BasePath "/botfront-secrets.yaml") . | sha256sum }}{{ include (print $.Template.BasePath "/botfront-api-configmap.yaml") . | sha256sum }}
       labels:
-        app: {{ .Release.Name }}-{{ .Values.botfront.api.appName }}
+        app: {{ .Release.Name }}-{{ .Values.botfront.webhooks.appName }}
     spec:
       containers:
       - env:
@@ -34,21 +35,23 @@ spec:
         - configMapRef:
             name: {{ .Release.Name }}-api-config
             optional: false
-        image: {{ .Values.botfront.api.image.name }}:{{ .Values.botfront.version }}
-        {{- if .Values.botfront.api.imagePullPolicy }}
-        imagePullPolicy: {{ .Values.botfront.api.imagePullPolicy }}
+        image: {{ .Values.botfront.webhooks.image.name }}:{{ .Values.botfront.webhooks.version }}
+        {{- if .Values.botfront.webhooks.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.botfront.webhooks.imagePullPolicy }}
         {{- end }}
         name: {{ .Release.Name }}-api
         ports:
         - containerPort: 8080
           protocol: TCP
         resources:
-          {{- with .Values.botfront.api.resources }}
+          {{- with .Values.botfront.webhooks.resources }}
           {{- toYaml . | nindent 10 }}
           {{- end }}
       restartPolicy: Always
       {{if .Values.botfront.imagePullSecret }}
       imagePullSecrets:
       - name: {{ .Values.botfront.imagePullSecret }}
-      {{end }}
+      {{ end }}
+{{ end }}
+
 
