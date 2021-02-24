@@ -2,8 +2,30 @@ apiVersion: v1
 entries:
   botfront:
   - apiVersion: v1
+    appVersion: v1.0.0
+    created: "2021-02-24T14:00:19.985637-05:00"
+    dependencies:
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 7.8.6
+    - condition: mongo-express.enabled
+      name: mongo-express
+      repository: https://cowboysysop.github.io/charts/
+      version: 1.0.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami/
+      version: 10.5.14
+    description: A Helm chart for Botfront
+    digest: 76b1ecbeabe70f1a410302664c42f04c53c8a067157dc9926326a05bd57f6d91
+    name: botfront
+    urls:
+    - https://botfront.github.io/botfront-helm/charts/botfront-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
     appVersion: v1.0.0-rc4
-    created: "2021-02-09T17:25:31.890505-05:00"
+    created: "2021-02-24T14:00:19.98019-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -25,7 +47,7 @@ entries:
     version: 1.0.0-beta0
   - apiVersion: v1
     appVersion: 0.27.2
-    created: "2021-02-09T17:25:31.883726-05:00"
+    created: "2021-02-24T14:00:19.974243-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -47,7 +69,7 @@ entries:
     version: 0.5.2
   - apiVersion: v1
     appVersion: 0.25.8
-    created: "2021-02-09T17:25:31.876327-05:00"
+    created: "2021-02-24T14:00:19.968062-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -69,7 +91,7 @@ entries:
     version: 0.5.1
   - apiVersion: v1
     appVersion: 0.25.3
-    created: "2021-02-09T17:25:31.869233-05:00"
+    created: "2021-02-24T14:00:19.962308-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -91,7 +113,7 @@ entries:
     version: 0.5.0
   - apiVersion: v1
     appVersion: 0.23.0
-    created: "2021-02-09T17:25:31.861502-05:00"
+    created: "2021-02-24T14:00:19.95595-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -113,7 +135,7 @@ entries:
     version: 0.4.3
   - apiVersion: v1
     appVersion: 0.23.0
-    created: "2021-02-09T17:25:31.853144-05:00"
+    created: "2021-02-24T14:00:19.950575-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -135,7 +157,7 @@ entries:
     version: 0.4.2
   - apiVersion: v1
     appVersion: 0.22.0
-    created: "2021-02-09T17:25:31.845469-05:00"
+    created: "2021-02-24T14:00:19.944527-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -157,7 +179,7 @@ entries:
     version: 0.4.1
   - apiVersion: v1
     appVersion: 0.22.0
-    created: "2021-02-09T17:25:31.838162-05:00"
+    created: "2021-02-24T14:00:19.938132-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -175,7 +197,7 @@ entries:
     version: 0.4.0
   - apiVersion: v1
     appVersion: 0.21.4
-    created: "2021-02-09T17:25:31.833275-05:00"
+    created: "2021-02-24T14:00:19.934492-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -193,7 +215,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: 0.20.3
-    created: "2021-02-09T17:25:31.827424-05:00"
+    created: "2021-02-24T14:00:19.929972-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -211,7 +233,7 @@ entries:
     version: 0.2.4
   - apiVersion: v1
     appVersion: 0.20.3
-    created: "2021-02-09T17:25:31.822545-05:00"
+    created: "2021-02-24T14:00:19.926263-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -229,7 +251,7 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: 0.20.2
-    created: "2021-02-09T17:25:31.8172-05:00"
+    created: "2021-02-24T14:00:19.922498-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -247,7 +269,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: 0.20.0
-    created: "2021-02-09T17:25:31.810108-05:00"
+    created: "2021-02-24T14:00:19.917205-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -265,7 +287,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: 0.20.0
-    created: "2021-02-09T17:25:31.805108-05:00"
+    created: "2021-02-24T14:00:19.913528-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -283,7 +305,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-09T17:25:31.798967-05:00"
+    created: "2021-02-24T14:00:19.908709-05:00"
     dependencies:
     - condition: mongodb.enabled
       name: mongodb
@@ -301,8 +323,17 @@ entries:
     version: 0.1.0
   botfront-project:
   - apiVersion: v1
+    appVersion: v1.0.0
+    created: "2021-02-24T14:00:19.992891-05:00"
+    description: A Helm chart for Botfront projects
+    digest: 2c0716882023427ca4673e250c688559d351284fc1703b987349fb45c1143d26
+    name: botfront-project
+    urls:
+    - https://botfront.github.io/botfront-helm/charts/botfront-project-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
     appVersion: v1.0.0-rc4
-    created: "2021-02-09T17:25:31.898693-05:00"
+    created: "2021-02-24T14:00:19.992372-05:00"
     description: A Helm chart for Botfront projects
     digest: dc87c371218d0420398743cc254e3c1b7fc3038a8b21b811f88093aa15ca6fcb
     name: botfront-project
@@ -311,7 +342,7 @@ entries:
     version: 1.0.0-beta0
   - apiVersion: v1
     appVersion: 0.27.2
-    created: "2021-02-09T17:25:31.898195-05:00"
+    created: "2021-02-24T14:00:19.991811-05:00"
     description: A Helm chart for Botfront projects
     digest: d316d1b61864dcf50e222cf08d330ae4a91db5bc8c2f5a68ad9059f3d2dd9bec
     name: botfront-project
@@ -320,7 +351,7 @@ entries:
     version: 0.5.2
   - apiVersion: v1
     appVersion: 0.25.8
-    created: "2021-02-09T17:25:31.897621-05:00"
+    created: "2021-02-24T14:00:19.99132-05:00"
     description: A Helm chart for Botfront projects
     digest: 5d1cd3e3234c07093196f562d43d15e41172fcf279821f2f1977899c27b22c34
     name: botfront-project
@@ -329,7 +360,7 @@ entries:
     version: 0.5.1
   - apiVersion: v1
     appVersion: 0.25.3
-    created: "2021-02-09T17:25:31.897042-05:00"
+    created: "2021-02-24T14:00:19.990862-05:00"
     description: A Helm chart for Botfront projects
     digest: 6663ec34bf5782c2079798c5925f46dc61fbaf880b834b129db1693e5c5d22d5
     name: botfront-project
@@ -338,7 +369,7 @@ entries:
     version: 0.5.0
   - apiVersion: v1
     appVersion: 0.23.0
-    created: "2021-02-09T17:25:31.896463-05:00"
+    created: "2021-02-24T14:00:19.990404-05:00"
     description: A Helm chart for Botfront projects
     digest: 274cfb3d79fef6fceced8eb1c0b5793cdafd1ed4d6fad0cd6e2dcb7f7092c16e
     name: botfront-project
@@ -347,7 +378,7 @@ entries:
     version: 0.4.3
   - apiVersion: v1
     appVersion: 0.23.0
-    created: "2021-02-09T17:25:31.895911-05:00"
+    created: "2021-02-24T14:00:19.989925-05:00"
     description: A Helm chart for Botfront projects
     digest: a046262c22a4cfefec988b76904aaae9b9962a6fa788c27a36d0f5a961bac3a1
     name: botfront-project
@@ -356,7 +387,7 @@ entries:
     version: 0.4.2
   - apiVersion: v1
     appVersion: 0.22.0
-    created: "2021-02-09T17:25:31.895328-05:00"
+    created: "2021-02-24T14:00:19.989452-05:00"
     description: A Helm chart for Botfront projects
     digest: 83dd0f18ce01dbe4f00e63292017936ee30c1f99121f1709f9b9cd740c5bccc0
     name: botfront-project
@@ -365,7 +396,7 @@ entries:
     version: 0.4.1
   - apiVersion: v1
     appVersion: 0.22.0
-    created: "2021-02-09T17:25:31.894713-05:00"
+    created: "2021-02-24T14:00:19.988432-05:00"
     description: A Helm chart for Botfront projects
     digest: 57d0538d46b7e1becb689502833eb696aabad1fcac5d5cca89efec7e8c991965
     name: botfront-project
@@ -374,7 +405,7 @@ entries:
     version: 0.4.0
   - apiVersion: v1
     appVersion: 0.21.4
-    created: "2021-02-09T17:25:31.894057-05:00"
+    created: "2021-02-24T14:00:19.987959-05:00"
     description: A Helm chart for Botfront projects
     digest: ff44923bb838b174cfe4aa6f383e7df8ba448d95a2dc7eaf0c1e5145ccf825b9
     name: botfront-project
@@ -383,7 +414,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: 0.20.3
-    created: "2021-02-09T17:25:31.893409-05:00"
+    created: "2021-02-24T14:00:19.987503-05:00"
     description: A Helm chart for Botfront projects
     digest: 579590836bd77ca0f6d5d67039ed2f62fe25a78c454fdef92b145536204a70b4
     name: botfront-project
@@ -392,7 +423,7 @@ entries:
     version: 0.2.4
   - apiVersion: v1
     appVersion: 0.20.3
-    created: "2021-02-09T17:25:31.892783-05:00"
+    created: "2021-02-24T14:00:19.986989-05:00"
     description: A Helm chart for Botfront projects
     digest: 6402238c2eacd0324550253110f3634f0c5c2f2a57bc3556051bac232ce067d6
     name: botfront-project
@@ -401,7 +432,7 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: 0.20.2
-    created: "2021-02-09T17:25:31.892171-05:00"
+    created: "2021-02-24T14:00:19.986529-05:00"
     description: A Helm chart for Botfront projects
     digest: dce648653fcd81d2d8993a0e06c33b87abfc0c98d33e21999544359e20cf6fac
     name: botfront-project
@@ -410,11 +441,11 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: 0.20.0
-    created: "2021-02-09T17:25:31.891437-05:00"
+    created: "2021-02-24T14:00:19.98609-05:00"
     description: A Helm chart for Botfront projects
     digest: 909aef686cce1f1e6209479f3d4284b9909ba92a89df785b135f4e3300314430
     name: botfront-project
     urls:
     - https://botfront.github.io/botfront-helm/charts/botfront-project-0.2.0.tgz
     version: 0.2.0
-generated: "2021-02-09T17:25:31.792817-05:00"
+generated: "2021-02-24T14:00:19.903991-05:00"
