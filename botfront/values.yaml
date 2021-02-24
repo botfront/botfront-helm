@@ -54,7 +54,7 @@ botfront:
     enabled: false
     # name used for labels and selectors
     appName: botfront-webhooks
-    version: v0.27.5
+    version:
     image:
       # Botfront API image name (e.g: botfront/botfront)
       name: botfront/botfront-api
