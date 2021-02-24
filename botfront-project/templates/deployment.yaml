@@ -36,6 +36,13 @@ spec:
               key: API_KEY
               name: {{ $.Release.Name }}-rasa-secrets
         {{- end }}
+        {{- if $.Values.rasa.authToken }}
+        - name: AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_TOKEN
+              name: {{ $.Release.Name }}-rasa-secrets
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ $.Release.Name }}-rasa-config
