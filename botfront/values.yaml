@@ -30,7 +30,7 @@ botfront:
   
   app:
   # Botfront version (e.g: latest)
-    version: v1.0.0-ee.1-rc.3
+    version: v1.0.0
     # an optional key to protect your graphql API (recommemded)
     graphQLKey:
     # name used for labels and selectors
@@ -51,10 +51,10 @@ botfront:
       periodSeconds: 3
     imagePullPolicy: IfNotPresent
   webhooks:
-    enabled: true
+    enabled: false
     # name used for labels and selectors
     appName: botfront-webhooks
-    version: v0.27.5
+    version:
     image:
       # Botfront API image name (e.g: botfront/botfront)
       name: botfront/botfront-api
