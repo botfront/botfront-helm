@@ -26,6 +26,10 @@ spec:
         {{ if $val.debug -}}
         - --debug
         {{ end -}}
+        {{- if $.Values.rasa.authToken }}
+        - -t  
+        - {{ $.Values.rasa.authToken }}
+        {{- end }}
         env:
         - name: BOTFRONT_ENV
           value: {{ $env }}
@@ -34,13 +38,6 @@ spec:
           valueFrom:
             secretKeyRef:
               key: API_KEY
-              name: {{ $.Release.Name }}-rasa-secrets
-        {{- end }}
-        {{- if $.Values.rasa.authToken }}
-        - name: AUTH_TOKEN
-          valueFrom:
-            secretKeyRef:
-              key: AUTH_TOKEN
               name: {{ $.Release.Name }}-rasa-secrets
         {{- end }}
         envFrom:
