@@ -30,7 +30,7 @@ botfront:
   
   app:
   # Botfront version (e.g: latest)
-    version: v1.0.0
+    version: v1.0.2
     # an optional key to protect your graphql API (recommemded)
     graphQLKey:
     # name used for labels and selectors
