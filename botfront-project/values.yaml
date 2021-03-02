@@ -11,6 +11,7 @@ debug: true
 
 rasa:
   image: botfront/rasa-for-botfront:v2.2.5-bf.4
+  authToken: 
   livenessProbe:
     initialProbeDelay: 30
     periodSeconds: 10
