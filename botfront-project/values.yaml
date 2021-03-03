@@ -10,7 +10,7 @@ projectId: bf
 debug: true
 
 rasa:
-  image: botfront/rasa-for-botfront:v2.2.5-bf.4
+  image: botfront/rasa-for-botfront:v2.2.5-bf.5
   authToken: 
   livenessProbe:
     initialProbeDelay: 30
