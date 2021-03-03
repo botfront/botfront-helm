@@ -26,6 +26,10 @@ spec:
         {{ if $val.debug -}}
         - --debug
         {{ end -}}
+        {{- if $.Values.rasa.authToken }}
+        - -t  
+        - {{ $.Values.rasa.authToken }}
+        {{- end }}
         env:
         - name: BOTFRONT_ENV
           value: {{ $env }}

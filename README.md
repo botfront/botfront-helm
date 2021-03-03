@@ -113,7 +113,7 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 
 | Parameter                        | Description                                                                                   | Default                 |
 |----------------------------------|-----------------------------------------------------------------------------------------------|-------------------------|
-| **`botfront.version`**           | Botfront API Docker image                                                                     | `v1.0.0`               |
+| **`botfront.version`**           | Botfront API Docker image                                                                     | `v1.0.3`               |
 | **`botfront.app.image.name`**    | Botfront Docker image                                                                         | `botfront/botfront`     |
 | **`botfront.app.host`**          | Botfront host (e.g botfront.your-domain.com)                                                  | `nil`                   |
 | **`botfront.app.graphQLKey`**    | Key to protect the GraphQL API                                                                | `nil`                   |
@@ -132,7 +132,8 @@ helm upgrade -f values-project.yaml my-project --namespace botfront-project botf
 | `projectId`                           | ProjectId                                                                                                           | `bf`                                    |
 | `botfront.graphQLEndpoint`            | Should have the form `http://<botfront-service>.<botfront-namespace>/graphql`                                       | `nil`                                   |
 | `botfront.graphQLKey`                 | Botfront GraphQL API key                                                                                            | `nil`                                   |
-| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:1.10.3-bf.3` |
+| `rasa.image`                          | Rasa image                                                                                                          | `botfront/rasa-for-botfront:2.2.5-bf.5` |
+| `rasa.authToken`                      | Rasa [authentication token](https://rasa.com/docs/rasa/http-api/#token-based-auth)                                  | `nil`                                   |
 | `ingress.host`                        | Rasa instance host                                                                                                  | `nil`                                   |
 | `ingress.tlsSecretName`               | Name of the secret containing the certificate                                                                       | `nil`                                   |
 | `ingress.nginx.enableSessionAffinity` | enable sticky session see [Working with multiple rasa instances](#working-with-multiple-rasa-instances) for details | `true`                                  |
