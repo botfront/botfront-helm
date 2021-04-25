@@ -114,6 +114,8 @@ mongodb:
   mongodbPassword:
   # MongoDB root password
   mongodbRootPassword:
+  # MongoDB URL
+  mongodbURL:
   # MongoDB oplog user username
   mongodbOplogUsername:
   # MongoDB oplog user password
