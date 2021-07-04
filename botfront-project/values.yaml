@@ -38,6 +38,7 @@ persistenceClaim:
 
 ingress:
   enabled: true
+  annotations: {}
   nginx:
     # Set to true if your cluster uses the nginx-ingress controller
     enabled: true
