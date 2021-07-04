@@ -9,6 +9,9 @@ metadata:
     app: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}{{ $.Values.appName }}
   name: {{ $.Release.Name }}-{{ if ne $env "default"}}{{ $env }}-{{ end }}rasa-ingress
   annotations:
+    {{- with .Values.ingress.annotations }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
     {{- if $.Values.ingress.nginx.enabled}}
     {{- if $.Values.ingress.nginx.enableSessionAffinity}}
     nginx.ingress.kubernetes.io/affinity: "cookie"
